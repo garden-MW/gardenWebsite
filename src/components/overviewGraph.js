@@ -20,6 +20,8 @@ const data = [
 
 export default function GraphDash() {
   return (
+    <div>
+      <h1 className="text-water">Testing testing</h1>
     <VictoryChart
     domain={{ y: [0.5, 5.5] }}
     domainPadding={{ x: 40 }}
@@ -71,5 +73,6 @@ export default function GraphDash() {
 
       </VictoryGroup>
     </VictoryChart>
+    </div>
   );
 }
