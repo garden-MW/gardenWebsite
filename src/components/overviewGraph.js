@@ -20,7 +20,7 @@ const data = [
 
 export default function GraphDash() {
   return (
-    <div className="w-full h-full border-l-4 border-pH border-dashed mt-4">
+    <div className="w-full h-full border-l-4 border-pH border-dashed mt-1">
     <VictoryChart
     domain={{ y: [0, 100] }}
     domainPadding={{ x: 20 }}
