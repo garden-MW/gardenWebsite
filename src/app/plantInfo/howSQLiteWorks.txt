@@ -1,0 +1,89 @@
+I asked chat gpt then confirmed with sources: 
+
+  terminal:
+    npm install sqlite3 express cors //https://blog.logrocket.com/using-built-in-sqlite-module-node-js/?utm_source=chatgpt.com
+    touch file.db //https://stackoverflow.com/questions/20155693/how-to-create-an-empty-sqlite-db-with-command/32450349
+
+//here we use express because it allows for us to use mySQL later
+  https://blog.logrocket.com/using-built-in-sqlite-module-node-js/?utm_source=chatgpt.com
+    After that, create a file in the root folder called server.js and start your Express.js server inside that file:
+
+    // server.js (more in actual file)
+    import express from 'express';
+
+    const PORT = 5000;
+    const app = express();
+
+    app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+  ....MORE IN FILE
+
+//to add things to the table
+node
+
+//then add 
+const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database("./garden.db");
+
+db.run(CREATE TABLE IF NOT EXISTS plants (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL,
+  water_frequency TEXT NOT NULL
+), (err) => {
+  if (err) console.error(err.message);
+  else console.log("Plants table created!");
+});
+
+db.close();
+
+//then more in the server.js under API route
+
+https://stackoverflow.com/questions/20155693/how-to-create-an-empty-sqlite-db-with-command/32450349
+
+how to switch between SQLite and mySQL
+dotenv lets you switch dynamically
+
+    npm install dotenv
+
+create a .enc file
+    DB_TYPE=mysql
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=your_password
+    DB_NAME=your_database
+
+
+///CONVERTING to mySQL
+
+  npm install mysql2
+
+  //replace database.js
+    const mysql = require("mysql2");
+
+    const db = mysql.createConnection({
+    host: "localhost",
+    user: "your_mysql_user",
+    password: "your_mysql_password",
+    database: "your_database_name",
+    });
+
+    db.connect((err) => {
+    if (err) {
+        console.error("MySQL Connection Error:", err);
+    } else {
+        console.log("Connected to MySQL database.");
+    }
+    });
+
+    module.exports = db;
+
+
+
+
+
+  //now export SQLite database to MySQL
+
+    sqlite3 test.db .dump > backup.sql //makes a backup.sql with the data
+
+  //import the data
+    mysql -u your_mysql_user -p your_database_name < backup.sql
