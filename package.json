@@ -3,16 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "docker compose -f docker-compose.dev.yml up -d",
+    "postdev": "docker compose -f docker-compose.dev.yml down",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "knex": "^3.1.0",
     "next": "15.1.7",
+    "pg": "^8.13.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^2.15.1",
+    "sqlite3": "^5.1.7",
     "victory": "^37.3.6"
   },
   "devDependencies": {
