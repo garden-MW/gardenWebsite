@@ -1,0 +1,67 @@
+[
+    {
+      "name": "Oliscia Thornton",
+      "email": "okthornton@middlebury.edu",
+      "pronouns": "she/they",
+      "major": "Computer Science",
+      "grad-year": "2026",
+      "profile-pic": [],
+      "bio": "I am a junior at Middlebury college and blah blah",
+      "interests": "I am interested in blah blah",
+      "classes": [
+        {
+          "name": "CSCI 201",
+          "status": "completed"
+        },
+        {
+          "name": "CSCI 202",
+          "status": "completed"
+        },
+        {
+          "name": "CSCI 318",
+          "status": "in progress"
+        }
+      ],
+      "partners": [
+        {
+          "name": "Evan Lin",
+          "email": "elin@middlebury.edu"
+        },
+        {
+          "name": "Seunghwan Oh",
+          "email": "seunghwano@middlebury.edu"
+        }
+      ]
+    },
+    {
+      "name": "Evan Lin",
+      "email": "elin@middlebury.edu",
+      "pronouns": "he/him",
+      "major": "Computer Science",
+      "grad-year": "2026",
+      "profile-pic": [],
+      "bio": "",
+      "interests": "",
+      "classes": [
+        {
+          "name": "CSCI 201",
+          "status": "completed"
+        },
+        {
+          "name": "CSCI 202",
+          "status": "completed"
+        },
+        {
+          "name": "CSCI 318",
+          "status": "in progress"
+        }
+      ],
+      "partners": [
+        {
+          "name": "Seunghwan Oh",
+          "email": "seunghwano@middlebury.edu"
+        }
+      ]
+    }
+  ]
+  
