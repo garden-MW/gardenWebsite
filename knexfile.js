@@ -66,7 +66,7 @@ module.exports = {
     client: "pg",
     connection: {
       connectionString: DATABASE_URL,
-      ssl: true,
+      ssl: true
     },
   },
 };
