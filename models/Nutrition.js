@@ -18,7 +18,7 @@ export default class PH extends BaseModel {
         id: { type: "integer" },
         date: { type: "string" },
         sensor: { type: "string" },
-        value: { type: "float"},
+        value: { type: "number"},
       },
     };
   }
