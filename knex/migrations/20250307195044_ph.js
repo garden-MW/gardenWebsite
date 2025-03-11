@@ -8,7 +8,7 @@ exports.up = function (knex) {
       table.increments("id").primary();
       table.string("date").notNullable();
       table.string("sensor").notNullable();
-      table.number("value").notNullable();
+      table.decimal("value").notNullable();
     });
   };
   
