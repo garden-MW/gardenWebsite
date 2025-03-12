@@ -1,7 +1,5 @@
 'use client'
-
 export default function AdminInput() {
-
     const handleSubmit = () => {
         const type = document.querySelector('input[name="type"]:checked').id;
         const entryDate = document.getElementById('entryDate').value;
