@@ -6,46 +6,8 @@ import {
   VictoryBar,
   VictoryGroup,
 } from "victory";
-
-const data = [
-  { x: "Sun", y: 1},
-  { x: "Sun", y: 5},
-  { x: "Sun", y: 3},
-  { x: "Mon", y: 2},
-  { x: "Tues", y: 3},
-  { x: "Wed", y: 2 },
-  { x: "Thurs", y: 1},
-  { x: "Fri", y: 1},
-  { x: "Sat", y: 1},
-];
-
-function computeNutritionPercentage(data){
-  let totalPerc = 0;
-  data.forEach(element => {
-      if (element.value < 2100){
-          totalPerc += element.value/2100 * 100;
-      }if(element.value > 2500){
-          totalPerc += 100 - (element.value/2500 * 100);
-      }else{
-          totalPerc += 100;
-      }
-  });
-  return totalPerc/data.length;
-}
-
-function computePHPercentage(data){
-  let totalPerc = 0;
-  data.forEach(element => {
-      if (element.value < 6.2){
-          totalPerc += element.value/6.2 * 100;
-      }if(element.value > 7.8){
-          totalPerc += 100 - (element.value/7.8 * 100);
-      }else{
-          totalPerc += 100;
-      }
-  });
-  return totalPerc/data.length;
-}
+import computeNutritionPercentage from './helperFuntions/nutritionPerc';
+import computePHPercentage from './helperFuntions/pHPerc';
 
 
 function formatData(input, type){

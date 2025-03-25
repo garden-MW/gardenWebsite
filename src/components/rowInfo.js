@@ -2,35 +2,8 @@
 
 import {useState} from 'react';
 import PercIndicator from './percIndicator';
-
-
-function computeNutritionPercentage(data){
-    let totalPerc = 0;
-    data.forEach(element => {
-        if (element.value < 1800){
-            totalPerc += element.value/1800 * 100;
-        }if(element.value > 2600){
-            totalPerc += 100 - (element.value/2600 * 100);
-        }else{
-            totalPerc += 100;
-        }
-    });
-    return totalPerc/data.length;
-}
-
-function computePHPercentage(data){
-    let totalPerc = 0;
-    data.forEach(element => {
-        if (element.value < 6.5){
-            totalPerc += element.value/6.5 * 100;
-        }if(element.value > 7.5){
-            totalPerc += 100 - (element.value/7.5 * 100);
-        }else{
-            totalPerc += 100;
-        }
-    });
-    return totalPerc/data.length;
-}
+import computeNutritionPercentage from './helperFuntions/nutritionPerc';
+import computePHPercentage from './helperFuntions/pHPerc';
 
 export default function RowInfo({type, withDetails = false}){
     const [percentage, setPercentage] = useState(0);
