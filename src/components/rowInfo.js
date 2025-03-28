@@ -1,11 +1,16 @@
 'use client'
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import PercIndicator from './percIndicator';
 import computeNutritionPercentage from './helperFuntions/nutritionPerc';
 import computePHPercentage from './helperFuntions/pHPerc';
 
-export default function RowInfo({type, withDetails = false}){
+function handleRecent (data){
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return data[0];
+}
+
+export default function RowInfo({type, withDetails = false, isAverage = false, isRecent = false }){
     const [percentage, setPercentage] = useState(0);
 
     const title = type.charAt(0).toUpperCase() + type.slice(1);
@@ -14,8 +19,8 @@ export default function RowInfo({type, withDetails = false}){
         nutrition: '#6F4F4C',
         pH: '#2B7052',
     }
-
-    fetch(`/api/${type}Data`)
+    useEffect(() => {
+        fetch(`/api/${type}Data`)
         .then(response => {
             if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -24,21 +29,53 @@ export default function RowInfo({type, withDetails = false}){
         })
         .then(data => {
             if (type === 'nutrition'){
-                setPercentage(computeNutritionPercentage(data));
+                if (isRecent){
+                    setPercentage(handleRecent(data));
+                }else{
+                    setPercentage( isAverage ? computeNutritionPercentage(data, true ): computeNutritionPercentage(data));
+                }
             }else{
-                setPercentage(computePHPercentage(data));
+                console.log(data);
+                if (isRecent){
+                    setPercentage(handleRecent(data));
+                }else{
+                    setPercentage( isAverage ? computePHPercentage(data, true) : computePHPercentage(data));
+                }
             }
         })
-        .catch(error => console.error('Fetch error:', error)); 
+        .catch(error => console.error('Fetch error:', error));
+    }, []);
+
+    if (isAverage){
+        return(
+            <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
+                <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">Average</h1>
+                <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage}</h1>
+                <div className="w-24 h-5">
+                    <PercIndicator percentage={percentage}/>
+                </div>
+            </div>
+        )
+    }else if (isRecent){
+        return(
+            <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
+                <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">Most Recent</h1>
+                <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage.value}</h1>
+                <div className="w-24 h-5">
+                    <PercIndicator percentage={percentage.value}/>
+                </div>
+            </div>
+        )
+    }
 
     return(
-        <div style={{borderColor: colors[type]}}className={`w-full h-[30%] border-l-[3px] flex flex-row items-center justify-between px-4`}>
-            <div className="w-24 h-5 justify-start text-black text-xs font-normal font-['Inter']">{title}</div>
-            <div className="w-24 h-5  justify-start text-black text-xs font-normal font-['Inter']">{percentage}%</div>
+        <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
+            <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">{title}</h1>
+            <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage}%</h1>
             <div className="w-24 h-5">
                 <PercIndicator percentage={percentage}/>
             </div>
-            <div className="w-24 h-5  justify-start text-black text-xs font-normal font-['Inter'] underline">Details</div>
+            {withDetails && <h1 className="w-24 h-5  justify-start text-black text-lg font-normal font-['Inter'] underline">Details</h1>}
         </div>
     )
 }

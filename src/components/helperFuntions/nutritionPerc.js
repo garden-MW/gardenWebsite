@@ -1,6 +1,13 @@
 
 
-export default function computeNutritionPercentage(data){
+export default function computeNutritionPercentage(data, actual = false){
+    if (actual){
+        let average = 0
+        data.forEach(element => {
+            average += +element.value;  
+        });
+        return +(average/data.length).toFixed(2);
+    }
     let totalPerc = 0;
     data.forEach(element => {
         if (element.value < 2100){

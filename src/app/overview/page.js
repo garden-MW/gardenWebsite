@@ -1,5 +1,4 @@
 import GraphDash from "@/components/overviewGraph"
-import HealthDisplay from "@/components/healthDisplay"
 import RowInfo from "@/components/rowInfo"
 
 export default function Overview(){

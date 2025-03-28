@@ -1,5 +1,7 @@
 'use client'
 import { useEffect } from "react"
+import RowInfo from "@/components/rowInfo"
+import SpecificGraph from "@/components/phGraph"
 
 export default function PHData() {
     useEffect(() => {
@@ -15,14 +17,24 @@ export default function PHData() {
               }
               return response.json();
             })
-            .then(data => console.log(data))
             .catch(error => console.error('Fetch error:', error)); 
     }, [])
 
     return (
-        <div>
-            <h1>pH Data</h1>
-            <p>Here is the data for pH</p>
+        <div className="flex flex-col h-screen w-screen p-5 items-center justify-evenly">
+            <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
+                <SpecificGraph type="pH" />
+            </div>
+            <div className="flex flex-row w-full h-auto justify-between ">
+                <div className=" h-auto flex items-center">
+                    <RowInfo type={"pH"} isAverage/>
+                </div>
+                <div className=" h-auto flex items-center">
+                    <RowInfo type={"pH"} isRecent/>
+                </div>
+            </div>
+           
+    
         </div>
     )
 }
