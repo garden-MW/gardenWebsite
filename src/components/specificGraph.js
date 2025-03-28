@@ -55,9 +55,10 @@ function formatData(input, type){
         sum += +value;
       })
       if (type === 'Nutrition'){
-        final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)])});
+        console.log("toPush", computeNutritionPercentage([sum/(day[dayArray[0]].length)], true));
+        final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)], true)});
       }else{
-        final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)])});
+        final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)], true)});
       }
       
     }
@@ -67,6 +68,7 @@ function formatData(input, type){
 
 export default function SpecificGraph({type}) {
   const [data, setData] = useState([]);
+  const limit = type === "nutrition" ? 3000 : 9;
   useEffect(() => {
     fetch(`/api/${type}Data`)
         .then(response => {
@@ -87,9 +89,9 @@ export default function SpecificGraph({type}) {
   }, [])
 
   return (
-    <div className="w-full h-full border-l-4 border-pH border-dashed lg:border-none mt-1 flex flex-col justify-between">
+    <div className="w-full h-full lg:border-none mt-1 flex flex-col justify-between">
     <VictoryChart
-    domain={{ y: [0, 100] }}
+    domain={{ y: [0, limit] }}
     domainPadding={{ x: 20 }}
     >
       <VictoryGroup
@@ -120,26 +122,7 @@ export default function SpecificGraph({type}) {
         <div 
         className="pl-8 pr-8 justify-center items-center gap-8 flex"
         >
-            {type === "nutrition" && <div 
-            className="flex items-center p-4 gap-4 justify-start"
-            >
-                <div 
-                className="w-4 h-4 flex items-center justify-center"
-                >
-                    <div 
-                    className="w-4 h-4 flex flex-col justify-start items-start relative"
-                    >
-                        <div
-                        className="w-4 h-4 bg-nutrition border-white border-solid border-[1px]" />
-                    </div>
-                </div>
-                <div
-                className="text-black text-2xl font-mono font-[400] break-words" 
-                >
-                  Nutrition
-                </div>
-            </div>}
-            {type === "pH" && <div
+             <div
             className="flex items-center p-4 gap-4 justify-start" 
             >
                 <div 
@@ -156,9 +139,9 @@ export default function SpecificGraph({type}) {
                 <h1
                 className="text-black text-2xl font-mono font-[400] break-words" 
                 >
-                  pH
+                  {`${type.toUpperCase()} LEVEL`}
                 </h1>
-            </div>}
+            </div>
         </div>
       </div>
     </div>

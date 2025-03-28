@@ -35,7 +35,6 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
                     setPercentage( isAverage ? computeNutritionPercentage(data, true ): computeNutritionPercentage(data));
                 }
             }else{
-                console.log(data);
                 if (isRecent){
                     setPercentage(handleRecent(data));
                 }else{
@@ -59,7 +58,7 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
     }else if (isRecent){
         return(
             <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
-                <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">Most Recent</h1>
+                <h1 className="w-32 h-5 justify-start text-black text-xl font-normal font-['Inter']">Most Recent</h1>
                 <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage.value}</h1>
                 <div className="w-24 h-5">
                     <PercIndicator percentage={percentage.value}/>

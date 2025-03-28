@@ -1,4 +1,11 @@
 export default function computePHPercentage(data, actual = false){
+    if (typeof data[0] === 'number'){
+        let average = 0
+        data.forEach(element => {
+            average += element;  
+        });
+        return +(average/data.length).toFixed(2);
+    }
     if (actual){
         let average = 0
         data.forEach(element => {
