@@ -8,10 +8,10 @@ export default function Overview(){
             <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
                 <GraphDash />
             </div>
-            <div className="lg:max-w-[50%] h-[50%] flex items-center">
+            <div className="lg:max-w-[50%]  w-[90%] h-[50%] flex items-center">
                 <RowInfo type={"nutrition"} withDetails/>
             </div>
-            <div className="lg:max-w-[50%] h-[50%] flex items-center">
+            <div className="lg:max-w-[50%] w-[90%] h-[50%] flex items-center">
                 <RowInfo type={"pH"} withDetails/>
             </div>
     
