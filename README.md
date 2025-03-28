@@ -39,3 +39,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## NOTES TO FORMAT LATER
 To push to main/do PR: add final commit of this:
 git config user.email "makersgarden2025@gmail.com"
+Has to be merged by this account too? 
