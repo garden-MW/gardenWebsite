@@ -2,11 +2,19 @@
 import Nutrition from '../../../../models/Nutrition';
 import { NextResponse } from 'next/server';
 
-export async function GET(request){
+export async function GET(){
+    const currentDate = new Date();
+    const currentDay = currentDate.getUTCDay();
+    const offsetToLastSunday = (currentDay + 7) % 7;
+    let lastSundayDate = new Date(currentDate);
+    lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
     try {
         const nutrition = await Nutrition.query();
         if (nutrition) {
-            return NextResponse.json(nutrition);
+          const weekData = nutrition.filter((input) => 
+            new Date(input.date) >= lastSundayDate.getDate()
+          )
+            return NextResponse.json(weekData);
         }
         return NextResponse.json([]);
         
@@ -27,7 +35,7 @@ export async function PUT(request){
 }
 
 
-/* How to get all pH data from PH table
+/* How to get this week's pH data from PH table
 
 fetch('/api/nutritionData', {
             method: 'GET',

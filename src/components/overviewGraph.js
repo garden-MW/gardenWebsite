@@ -1,26 +1,101 @@
 'use client'
 import React from 'react';
+import {useState, useEffect} from 'react';
 import {
   VictoryChart,
   VictoryBar,
   VictoryGroup,
 } from "victory";
+import computeNutritionPercentage from './helperFuntions/nutritionPerc';
+import computePHPercentage from './helperFuntions/pHPerc';
 
-const data = [
-  { x: "Sun", y: 1},
-  { x: "Sun", y: 5},
-  { x: "Sun", y: 3},
-  { x: "Mon", y: 2},
-  { x: "Tues", y: 3},
-  { x: "Wed", y: 2 },
-  { x: "Thurs", y: 1},
-  { x: "Fri", y: 1},
-  { x: "Sat", y: 1},
-];
+
+function formatData(input, type){
+  const final = [];
+  const Sun = [];
+  const Mon = [];
+  const Tues = [];
+  const Wed = [];
+  const Thurs = [];
+  const Fri = [];
+  const Sat = [];
+
+  input.forEach((element) => {
+    const day = new Date(element.date).getDay();
+    if (day === 0){
+      Sun.push(element.value);
+    }else if(day === 1){
+      Mon.push(element.value);
+    }else if(day === 2){
+      Tues.push(element.value);
+    }
+    else if(day === 3){
+      Wed.push(element.value);
+    }
+    else if(day === 4){
+      Thurs.push(element.value);
+    }
+    else if(day === 5){
+      Fri.push(element.value);
+    }
+    else if(day === 6){
+      Sat.push(element.value);
+    }
+  })
+
+  const days = [{"Sun" : Sun}, {"Mon": Mon}, {"Tues": Tues}, {"Wed": Wed}, {"Thurs": Thurs}, {"Fri" : Fri}, {"Sat": Sat}];
+
+  days.forEach((day, index) => {
+    let sum = 0;
+    const dayArray = Object.keys(day);
+    if (day[dayArray[0]].length === 0){
+      final.push({x: dayArray[0], y: 0});
+    }else{
+      day[dayArray[0]].forEach((value) => {
+        sum += +value;
+      })
+      if (type === 'Nutrition'){
+        final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)])});
+      }else{
+        final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)])});
+      }
+      
+    }
+  })
+  return final;
+}
 
 export default function GraphDash() {
+  const [nutritionData, setNutritionData] = useState([]);
+  const [pHData, setPHData] = useState([]);
+  useEffect(() => {
+    fetch(`/api/nutritionData`)
+        .then(response => {
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setNutritionData(formatData(data, 'Nutrition'));
+        })
+        .catch(error => console.error('Fetch error:', error)); 
+
+    fetch(`/api/pHData`)
+        .then(response => {
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setPHData(formatData(data, 'PH'));
+        })
+        .catch(error => console.error('Fetch error:', error)); 
+  }, [])
+
   return (
-    <div className="w-full h-full border-l-4 border-pH border-dashed mt-1">
+    <div className="w-full h-full border-l-4 border-pH border-dashed lg:border-none mt-1 flex flex-col justify-between">
     <VictoryChart
     domain={{ y: [0, 100] }}
     domainPadding={{ x: 20 }}
@@ -29,46 +104,21 @@ export default function GraphDash() {
         offset={12}
         style={{data: {width: 10}}}
       >
-        <VictoryBar 
+        {/*<VictoryBar 
         style={{ data: { fill: "var(--color-water)" } }}
         data={
-          [
-            { x: "Sun", y: 30},
-            { x: "Mon", y: 20},
-            { x: "Tues", y: 30},
-            { x: "Wed", y: 25 },
-            { x: "Thurs", y: 79},
-            { x: "Fri", y: 23},
-            { x: "Sat", y: 13},
-          ]
         } 
-        />
+        />*/}
         <VictoryBar 
         style = {{ data: { fill: "var(--color-nutrition)" } }}
         data={
-          [
-            { x: "Sun", y: 19},
-            { x: "Mon", y: 28},
-            { x: "Tues", y: 73},
-            { x: "Wed", y: 98 },
-            { x: "Thurs", y: 20},
-            { x: "Fri", y: 1},
-            { x: "Sat", y: 5},
-          ]
+          nutritionData
         } 
         />
         <VictoryBar 
         style = {{data: { fill: "var(--color-pH)" } }}
         data={
-          [
-            { x: "Sun", y: 50},
-            { x: "Mon", y: 23},
-            { x: "Tues", y: 35},
-            { x: "Wed", y: 26 },
-            { x: "Thurs", y: 11},
-            { x: "Fri", y: 66},
-            { x: "Sat", y: 55},
-          ]
+          pHData
         } 
         />
 
@@ -78,12 +128,12 @@ export default function GraphDash() {
 
 
       <div 
-      className="w-[90%] h-[10%] justify-center items-center inline-flex"
+      className="w-[90%] h-[10%] justify-center items-center flex"
       >
         <div 
         className="pl-8 pr-8 justify-center items-center gap-8 flex"
         >
-            <div 
+            {/*<div 
             className="flex items-center p-4 gap-4 justify-start"
             >
                 <div 
@@ -100,7 +150,7 @@ export default function GraphDash() {
                 >
                   Water Levels
                 </div>
-            </div>
+            </div>*/}
             <div 
             className="flex items-center p-4 gap-4 justify-start"
             >
