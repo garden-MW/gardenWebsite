@@ -74,7 +74,7 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
             <div className="w-24 h-5">
                 <PercIndicator percentage={percentage}/>
             </div>
-            {withDetails && <h1 className="w-24 h-5  justify-start text-black text-lg font-normal font-['Inter'] underline">Details</h1>}
+            {withDetails && <a href={`/${type}Data`} className="w-24 h-5  justify-start text-black text-lg font-normal font-['Inter']">Details</a>}
         </div>
     )
 }
