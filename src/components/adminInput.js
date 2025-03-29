@@ -1,10 +1,24 @@
 'use client'
+
+import React, { useState } from "react";
+import Alert from '@mui/material/Alert';
+import { useRouter } from "next/navigation";
+
 export default function AdminInput() {
+    const [status, setStatus] = useState("standard");
+    const router = useRouter();
+
     const handleSubmit = () => {
+        setStatus("loading");
         const type = document.querySelector('input[name="type"]:checked').id;
         const entryDate = document.getElementById('entryDate').value;
         const sensor = document.getElementById('sensor').value;
         const value = Number(document.getElementById('value').value);
+
+        if (!type || !entryDate || !sensor || !value){
+            setStatus("error");
+            return;
+        }
 
         fetch(`/api/${type}Data`, {
             method: 'PUT',
@@ -21,30 +35,56 @@ export default function AdminInput() {
         })
             .then(response => {
                 if (!response.ok) {
+                    setStatus("error");
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                setStatus("success");
                 return response.json();
             })
-            .then(data => console.log(data))
             .catch(error => console.error('Fetch error:', error)); 
     }
 
+    if (status === "error"){
+        return (
+            <div className="flex flex-col items-center justify-center h-screen">
+                <Alert onClose={() => { window.location.reload()}} severity="error">There was an issue uploading. Make sure all fields are completed. If so, please try again. Contact if problem persists.</Alert>
+            </div>
+        );
+    }
+    
+    if (status === "loading"){ 
+        return (
+            <div className="flex flex-col items-center justify-center h-screen">
+                <Alert severity="info">Please wait...</Alert>
+            </div>
+        );
+    }
+
+    if (status === "success"){ 
+        return (
+            <div className="flex flex-col items-center justify-center h-screen">
+                <Alert severity="success" onClose={() => {window.location.reload()}}>Data has been added!</Alert>
+            </div>
+        );
+    }
+
     return (
-        <div className="h-screen w-sceen flex flex-col justify-center items-center">
+        <div className="h-screen w-sceen space-y-5 flex flex-col justify-center items-center">
             <h1>Select Data Entry Type</h1>
             <div>
                 <input type="radio" id="pH" name="type" value="PH" defaultChecked/>
-                <label htmlFor="pH">pH</label>
+                <label style={{marginRight: '2rem'}} htmlFor="pH">pH</label>
                 <input type="radio" id="nutrition" name="type" value="Nutrition"/>
                 <label htmlFor="nutrition">Nutrition</label>
             </div>
             <label htmlFor="entryDate">Entry (date and time)</label>
-            <input type="datetime-local" id="entryDate" name="entryDate" required/>
+            <input className="rounded-lg w-48" type="datetime-local" id="entryDate" name="entryDate" required/>
             <label htmlFor="sensor">Sensor</label>
-            <input type="text" id="sensor" name="sensor" required/>
+            <input className="rounded-lg w-48" type="text" id="sensor" name="sensor" required/>
             <label htmlFor="value">Value</label>
-            <input type="number" id="value" name="value" required/>
-            <button onClick={() => handleSubmit()}>Submit</button>
+            <input className="rounded-lg w-48" type="number" id="value" name="value" required/>
+            <button type="submit" onClick={() => handleSubmit()} style={{backgroundColor: '#b55e3e', width: '12rem'}} className="rounded-lg" >Submit</button>
+            <button onClick={() => {router.push('/')}} style={{backgroundColor: '#b55e3e', width: '12rem'}} className="rounded-lg w-48">Back to Home</button>
         </div>
     )
 }
