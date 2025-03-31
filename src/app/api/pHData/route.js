@@ -4,16 +4,16 @@ import { NextResponse } from 'next/server';
 
 export async function GET(){
     const currentDate = new Date();
-    const currentDay = currentDate.getUTCDay();
+    const currentDay = currentDate.getDay();
     const offsetToLastSunday = (currentDay + 7) % 7;
     let lastSundayDate = new Date(currentDate);
     lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
     try {
         const ph = await PH.query();
         if (ph) {
-          const weekData = ph.filter((input) => 
-            new Date(input.date) >= lastSundayDate.getDate()
-          )
+          const weekData = ph.filter((input) => {
+            return new Date(input.date).getDate() >= lastSundayDate.getDate()
+         })
           return NextResponse.json(weekData);
         }
         return NextResponse.json([]);

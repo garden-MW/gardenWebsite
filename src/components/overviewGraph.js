@@ -55,9 +55,11 @@ function formatData(input, type){
         sum += +value;
       })
       if (type === 'Nutrition'){
-        final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)])});
+        final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)], false, true)});
       }else{
-        final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)])});
+        console.log("BLAH", computePHPercentage([sum/(day[dayArray[0]].length)], false, true))
+        console.log(sum/(day[dayArray[0]].length));
+        final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)], false, true)});
       }
       
     }
