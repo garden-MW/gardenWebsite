@@ -49,9 +49,9 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
         return(
             <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
                 <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">Average</h1>
-                <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage}</h1>
+                <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage ? percentage : 'N/A' }</h1>
                 <div className="w-24 h-5">
-                    <PercIndicator percentage={percentage}/>
+                    <PercIndicator percentage={percentage ? percentage : 100}/>
                 </div>
             </div>
         )
@@ -59,9 +59,9 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
         return(
             <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
                 <h1 className="w-32 h-5 justify-start text-black text-xl font-normal font-['Inter']">Most Recent</h1>
-                <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage.value}</h1>
+                <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage ? percentage.value : 'N/A'}</h1>
                 <div className="w-24 h-5">
-                    <PercIndicator percentage={percentage.value}/>
+                    <PercIndicator percentage={percentage ? percentage.value : 100}/>
                 </div>
             </div>
         )
@@ -70,7 +70,7 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
     return(
         <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
             <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">{title}</h1>
-            <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{percentage}%</h1>
+            <h1 className="w-24 h-5  justify-start text-black text-xl font-normal font-['Inter']">{ Number.isNaN(percentage) ? 'N/A' : percentage}%</h1>
             <div className="w-24 h-5">
                 <PercIndicator percentage={percentage}/>
             </div>

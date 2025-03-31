@@ -11,8 +11,10 @@ export async function GET(){
     try {
         const nutrition = await Nutrition.query();
         if (nutrition) {
-          const weekData = nutrition.filter((input) => 
-            new Date(input.date) >= lastSundayDate.getDate()
+          const weekData = nutrition.filter((input) => {
+            return new Date(input.date).getDate() >= lastSundayDate.getDate()
+          }
+            
           )
             return NextResponse.json(weekData);
         }
