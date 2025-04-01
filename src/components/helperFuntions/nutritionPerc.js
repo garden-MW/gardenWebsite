@@ -33,7 +33,7 @@ export default function computeNutritionPercentage(data, actual = false, overvie
         if (element.value < 2100){
             totalPerc += element.value/2100 * 100;
         }else if(element.value > 2500){
-            totalPerc += 100 - (element.value/2500 * 100);
+            totalPerc += 100 - (element.value/2500);
         }else{
             totalPerc += 100;
         }
