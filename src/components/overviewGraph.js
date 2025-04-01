@@ -57,8 +57,6 @@ function formatData(input, type){
       if (type === 'Nutrition'){
         final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)], false, true)});
       }else{
-        console.log("BLAH", computePHPercentage([sum/(day[dayArray[0]].length)], false, true))
-        console.log(sum/(day[dayArray[0]].length));
         final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)], false, true)});
       }
       
@@ -80,6 +78,7 @@ export default function GraphDash() {
         })
         .then(data => {
             setNutritionData(formatData(data, 'Nutrition'));
+            console.log(data, formatData(data, 'Nutrition'));
         })
         .catch(error => console.error('Fetch error:', error)); 
 
@@ -97,7 +96,7 @@ export default function GraphDash() {
   }, [])
 
   return (
-    <div className="w-full h-full border-l-4 border-pH border-dashed lg:border-none mt-1 flex flex-col justify-between">
+    <div className="w-full h-full mt-1 flex flex-col justify-between">
     <VictoryChart
     domain={{ y: [0, 100] }}
     domainPadding={{ x: 20 }}

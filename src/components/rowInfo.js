@@ -10,7 +10,7 @@ function handleRecent (data){
     return data[0];
 }
 
-export default function RowInfo({type, withDetails = false, isAverage = false, isRecent = false }){
+export default function RowInfo({type, data, withDetails = false, isAverage = false, isRecent = false }){
     const [percentage, setPercentage] = useState(0);
 
     const title = type.charAt(0).toUpperCase() + type.slice(1);
@@ -19,8 +19,24 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
         nutrition: '#6F4F4C',
         pH: '#2B7052',
     }
+
     useEffect(() => {
-        fetch(`/api/${type}Data`)
+        if (!withDetails){
+            if (type === 'nutrition'){
+                if (isRecent){
+                    setPercentage(handleRecent(data));
+                }else{
+                    setPercentage( isAverage ? computeNutritionPercentage(data, true ): computeNutritionPercentage(data));
+                }
+            }else{
+                if (isRecent){
+                    setPercentage(handleRecent(data));
+                }else{
+                    setPercentage( isAverage ? computePHPercentage(data, true) : computePHPercentage(data));
+                }
+            }
+        }else{
+            fetch(`/api/${type}Data`)
         .then(response => {
             if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -43,7 +59,9 @@ export default function RowInfo({type, withDetails = false, isAverage = false, i
             }
         })
         .catch(error => console.error('Fetch error:', error));
-    }, []);
+        }
+        
+    }, [data])
 
     if (isAverage){
         return(

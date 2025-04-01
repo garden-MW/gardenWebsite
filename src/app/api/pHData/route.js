@@ -2,18 +2,38 @@
 import PH from '../../../../models/PH';
 import { NextResponse } from 'next/server';
 
-export async function GET(){
+export async function GET(request){
+    const { searchParams } = new URL(request.url);
+    const sorted = searchParams.get("sorted");
     const currentDate = new Date();
     const currentDay = currentDate.getDay();
     const offsetToLastSunday = (currentDay + 7) % 7;
     let lastSundayDate = new Date(currentDate);
     lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
     try {
-        const ph = await PH.query();
+        const ph = await PH.query().orderBy('sensor', 'asc');
         if (ph) {
           const weekData = ph.filter((input) => {
-            return new Date(input.date).getDate() >= lastSundayDate.getDate()
+            return new Date(input.date) >= new Date(lastSundayDate)
          })
+         if (weekData && sorted){
+          const groupedData = [];
+          let current = weekData[0].sensor;
+          let currentArray = [];
+          weekData.forEach((element) => {
+            if (element.sensor === current){
+              currentArray.push(element);
+            }else{
+              groupedData.push(currentArray);
+              currentArray = [element];
+              current = element.sensor;
+            }
+          })
+          groupedData.push(currentArray);
+          return NextResponse.json(groupedData);
+         }
+
+
           return NextResponse.json(weekData);
         }
         return NextResponse.json([]);
