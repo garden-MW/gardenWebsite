@@ -18,7 +18,6 @@ export async function GET(request){
           })
           if (weekData && sorted){
             const groupedData = [];
-            let current = weekData[0].sensor;
             let currentArray = [];
             weekData.forEach((element) => {
               if (element.sensor === current){
@@ -38,7 +37,10 @@ export async function GET(request){
         return NextResponse.json([]);
         
     } catch (error) {
-        return NextResponse.error(error);
+        return NextResponse.json({
+          error: "Failed to fetch nutrition data",
+          details: error.message
+        });
     }
 }
 

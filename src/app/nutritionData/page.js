@@ -19,7 +19,6 @@ export default function NutritionData() {
                 return response.json();
             })
             .then(data => {
-                console.log("data", data);
                 setFullData(data);
                 setCurrentData(data[index]);
                 setCurrentGraphData(formatData(data[index], 'Nutrition'));
@@ -45,6 +44,14 @@ export default function NutritionData() {
             setCurrentGraphData(formatData(fullData[next], "Nutrition"));
             setLoading(false);
         }
+    }
+
+    if (loading){
+        return (
+            <div className="p-10 flex flex-col h-screen w-screen space-y-5 items-center justify-evenly">
+                <p>Loading...</p>
+            </div>
+        )
     }
 
     return (
