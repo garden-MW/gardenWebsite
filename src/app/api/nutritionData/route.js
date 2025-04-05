@@ -18,6 +18,7 @@ export async function GET(request){
           })
           if (weekData && sorted){
             const groupedData = [];
+            let current = weekData[0].sensor;
             let currentArray = [];
             weekData.forEach((element) => {
               if (element.sensor === current){

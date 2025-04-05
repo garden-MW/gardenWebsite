@@ -19,6 +19,7 @@ export default function NutritionData() {
                 return response.json();
             })
             .then(data => {
+                console.log("data", data);
                 setFullData(data);
                 setCurrentData(data[index]);
                 setCurrentGraphData(formatData(data[index], 'Nutrition'));
