@@ -18,25 +18,25 @@ export default function computeNutritionPercentage(data, actual = false, overvie
 
     let totalPerc = 0;
     if (typeof data[0] === 'number' && overview){
+        console.log(data, data[0]/2500 * 100);
         if (data[0] < 2100){
             totalPerc += data[0]/2100 * 100;
         }else if(data[0] > 2500){
-            totalPerc += 100 - (data[0]/2500 * 100);
+            totalPerc += 100 - (data[0]/2500);
         }else{
             totalPerc += 100;
         }
+        console.log("totalPerc", totalPerc);
         return +(totalPerc/data.length).toFixed(2)
     }
     data.forEach(element => {
         if (element.value < 2100){
             totalPerc += element.value/2100 * 100;
         }else if(element.value > 2500){
-            totalPerc += 100 - (element.value/2500 * 100);
+            totalPerc += 100 - (element.value/2500);
         }else{
             totalPerc += 100;
         }
     });
-    console.log("data", data)
-    console.log("return", +(totalPerc/data.length).toFixed(2))
     return +(totalPerc/data.length).toFixed(2);
   }

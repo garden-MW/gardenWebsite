@@ -2,26 +2,45 @@
 import Nutrition from '../../../../models/Nutrition';
 import { NextResponse } from 'next/server';
 
-export async function GET(){
+export async function GET(request){
+    const { searchParams } = new URL(request.url);
+    const sorted = searchParams.get("sorted");
     const currentDate = new Date();
     const currentDay = currentDate.getUTCDay();
     const offsetToLastSunday = (currentDay + 7) % 7;
     let lastSundayDate = new Date(currentDate);
     lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
     try {
-        const nutrition = await Nutrition.query();
+        const nutrition = await Nutrition.query().orderBy('sensor', 'asc');
         if (nutrition) {
           const weekData = nutrition.filter((input) => {
-            return new Date(input.date).getDate() >= lastSundayDate.getDate()
+            return new Date(input.date) >= new Date(lastSundayDate)
+          })
+          if (weekData && sorted){
+            const groupedData = [];
+            let currentArray = [];
+            weekData.forEach((element) => {
+              if (element.sensor === current){
+                currentArray.push(element);
+              }else{
+                groupedData.push(currentArray);
+                currentArray = [element];
+                current = element.sensor;
+              }
+            })
+            groupedData.push(currentArray);
+            return NextResponse.json(groupedData);
           }
-            
-          )
-            return NextResponse.json(weekData);
+    
+          return NextResponse.json(weekData);
         }
         return NextResponse.json([]);
         
     } catch (error) {
-        return NextResponse.error(error);
+        return NextResponse.json({
+          error: "Failed to fetch nutrition data",
+          details: error.message
+        });
     }
 }
 

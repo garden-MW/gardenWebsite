@@ -6,70 +6,12 @@ import {
   VictoryBar,
   VictoryGroup,
 } from "victory";
-import computeNutritionPercentage from './helperFuntions/nutritionPerc';
-import computePHPercentage from './helperFuntions/pHPerc';
+import formatData from './helperFuntions/formatData';
 
-
-function formatData(input, type){
-  const final = [];
-  const Sun = [];
-  const Mon = [];
-  const Tues = [];
-  const Wed = [];
-  const Thurs = [];
-  const Fri = [];
-  const Sat = [];
-
-  input.forEach((element) => {
-    const day = new Date(element.date).getDay();
-    if (day === 0){
-      Sun.push(element.value);
-    }else if(day === 1){
-      Mon.push(element.value);
-    }else if(day === 2){
-      Tues.push(element.value);
-    }
-    else if(day === 3){
-      Wed.push(element.value);
-    }
-    else if(day === 4){
-      Thurs.push(element.value);
-    }
-    else if(day === 5){
-      Fri.push(element.value);
-    }
-    else if(day === 6){
-      Sat.push(element.value);
-    }
-  })
-
-  const days = [{"Sun" : Sun}, {"Mon": Mon}, {"Tues": Tues}, {"Wed": Wed}, {"Thurs": Thurs}, {"Fri" : Fri}, {"Sat": Sat}];
-
-  days.forEach((day) => {
-    let sum = 0;
-    const dayArray = Object.keys(day);
-    if (day[dayArray[0]].length === 0){
-      final.push({x: dayArray[0], y: 0});
-    }else{
-      day[dayArray[0]].forEach((value) => {
-        sum += +value;
-      })
-      if (type === 'Nutrition'){
-        console.log("toPush", computeNutritionPercentage([sum/(day[dayArray[0]].length)], true));
-        final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)], true)});
-      }else{
-        final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)], true)});
-      }
-      
-    }
-  })
-  return final;
-}
-
-export default function SpecificGraph({type}) {
-  const [data, setData] = useState([]);
+export default function SpecificGraph({type, data}) {
+  //const [data, setData] = useState([]);
   const limit = type === "nutrition" ? 3000 : 9;
-  useEffect(() => {
+  /*useEffect(() => {
     fetch(`/api/${type}Data`)
         .then(response => {
             if (!response.ok) {
@@ -86,7 +28,7 @@ export default function SpecificGraph({type}) {
             
         })
         .catch(error => console.error('Fetch error:', error)); 
-  }, [])
+  }, [])*/
 
   return (
     <div className="w-full h-full lg:border-none mt-1 flex flex-col justify-between">
