@@ -39,7 +39,10 @@ export async function GET(request){
         return NextResponse.json([]);
         
     } catch (error) {
-        return NextResponse.error(error);
+      return NextResponse.json({
+        error: "Failed to fetch pH data",
+        details: error.message
+      });
     }
 }
 
