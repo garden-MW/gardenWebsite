@@ -9,26 +9,7 @@ import {
 import formatData from './helperFuntions/formatData';
 
 export default function SpecificGraph({type, data}) {
-  //const [data, setData] = useState([]);
   const limit = type === "nutrition" ? 3000 : 9;
-  /*useEffect(() => {
-    fetch(`/api/${type}Data`)
-        .then(response => {
-            if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (type === "nutrition"){
-                setData(formatData(data, 'Nutrition'));
-            }else{
-                setData(formatData(data, 'PH'));
-            }
-            
-        })
-        .catch(error => console.error('Fetch error:', error)); 
-  }, [])*/
 
   return (
     <div className="w-full h-full lg:border-none mt-1 flex flex-col justify-between">
@@ -74,7 +55,8 @@ export default function SpecificGraph({type, data}) {
                     className="w-4 h-4 flex flex-col justify-start items-start relative"
                     >
                         <div 
-                        className="w-4 h-4 bg-pH border-white border-solid border-[1px]" 
+                        style={{backgroundColor: type === "nutrition" ? "var(--color-nutrition)" : "var(--color-pH)"}}
+                        className="w-4 h-4 border-white border-solid border-[1px]" 
                         />
                     </div>
                 </div>

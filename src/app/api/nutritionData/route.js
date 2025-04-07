@@ -2,21 +2,30 @@
 import Nutrition from '../../../../models/Nutrition';
 import { NextResponse } from 'next/server';
 
+const normalizeToLocalMidnight = (date) => {
+  const normalized = new Date(date);
+  normalized.setHours(0, 0, 0, 0); // Set time to midnight in local time
+  return normalized;
+};
+
+
 export async function GET(request){
     const { searchParams } = new URL(request.url);
     const sorted = searchParams.get("sorted");
     const currentDate = new Date();
-    const currentDay = currentDate.getUTCDay();
+    const currentDay = currentDate.getDay();
     const offsetToLastSunday = (currentDay + 7) % 7;
     let lastSundayDate = new Date(currentDate);
     lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
+    lastSundayDate = normalizeToLocalMidnight(lastSundayDate);
     try {
         const nutrition = await Nutrition.query().orderBy('sensor', 'asc');
         if (nutrition) {
           const weekData = nutrition.filter((input) => {
-            return new Date(input.date) >= new Date(lastSundayDate)
+            const inputDate = normalizeToLocalMidnight(new Date(input.date));
+            return inputDate >= lastSundayDate;
           })
-          if (weekData && sorted){
+          if (weekData.length > 0 && sorted){
             const groupedData = [];
             let current = weekData[0].sensor;
             let currentArray = [];
@@ -32,7 +41,7 @@ export async function GET(request){
             groupedData.push(currentArray);
             return NextResponse.json(groupedData);
           }
-    
+  
           return NextResponse.json(weekData);
         }
         return NextResponse.json([]);
