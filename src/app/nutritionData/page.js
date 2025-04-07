@@ -19,9 +19,10 @@ export default function NutritionData() {
                 return response.json();
             })
             .then(data => {
+                console.log("data", data);
                 setFullData(data);
-                setCurrentData(data[index]);
-                setCurrentGraphData(formatData(data[index], 'Nutrition'));
+                setCurrentData(data ? data[index] : []);
+                setCurrentGraphData(formatData(data.length > 0 ? data[index] : [], 'Nutrition'));
                 setLoading(false);
             })
             .catch(error => console.error('Fetch error:', error)); 

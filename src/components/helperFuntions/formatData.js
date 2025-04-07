@@ -2,6 +2,19 @@ import computeNutritionPercentage from './nutritionPerc';
 import computePHPercentage from './nutritionPerc';
 
 export default function formatData(input, type){
+  console.log("formatData", input);
+  if (!input || input.length === 0){
+    console.log("HIT EMPTY");
+    return [
+      {x: "Sun", y: 0},
+      {x: "Mon", y: 0},
+      {x: "Tues", y: 0},
+      {x: "Wed", y: 0},
+      {x: "Thurs", y: 0},
+      {x: "Fri", y: 0},
+      {x: "Sat", y: 0}
+    ]
+  }
   console.log("input", input);
   const final = [];
   const Sun = [];
