@@ -23,10 +23,15 @@ export async function PUT(request){
     try {
         
         const { dataPoints } = await request.json();
-        const dataMessage = await DataMessage.query().where('type', dataPoints.type).insertAndFetch("message", dataPoints.message);
+        console.log(DataMessage.query().where({type: dataPoints.type}));
+        const dataMessage = await DataMessage.query().where({type: dataPoints.type}).update({message: dataPoints.message});
+        console.log(dataMessage);
         return NextResponse.json(dataMessage);
     } catch (error) {
-        return NextResponse.error(error);
+        return NextResponse.json(
+            { error: "Failed to update Message data", details: error.message },
+            { status: 500 }
+        );
     }
 }
 
