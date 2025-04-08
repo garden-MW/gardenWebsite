@@ -13,10 +13,22 @@ function handleRecent (data){
     return data[0];
 }
 
+function getRange(data){
+    if (!data || data.length === 0) {
+        return {min: 'N/A', max: 'N/A'};
+    }
+    const min = Math.min(...data.map(item => item.value));
+    const max = Math.max(...data.map(item => item.value));
+    console.log(min, max);
+    return {min, max};
+}
+
 export default function RowInfo({type, data, withDetails = false, isAverage = false, isRecent = false }){
     const [percentage, setPercentage] = useState(0);
     const [negPerc, setNegPerc] = useState(0);
     const [posPerc, setPosPerc] = useState(0);
+    const [min, setMin] = useState("N/A");
+    const [max, setMax] = useState("N/A");
 
     const title = type.charAt(0).toUpperCase() + type.slice(1);
     const colors = {
@@ -49,6 +61,7 @@ export default function RowInfo({type, data, withDetails = false, isAverage = fa
                         const result = computePHPercentage(data, false, false, true);
                         setNegPerc(result.neg);
                         setPosPerc(result.pos);
+
                     }
                 }
             }
@@ -71,6 +84,9 @@ export default function RowInfo({type, data, withDetails = false, isAverage = fa
                         const result = computeNutritionPercentage(data, false, false, true);
                         setNegPerc(result.neg);
                         setPosPerc(result.pos);
+                        const rangeResult = getRange(data);
+                        setMin(rangeResult.min);
+                        setMax(rangeResult.max);
                     }
                 }
             }else{
@@ -83,6 +99,9 @@ export default function RowInfo({type, data, withDetails = false, isAverage = fa
                         const result = computePHPercentage(data, false, false, true);
                         setNegPerc(result.neg);
                         setPosPerc(result.pos);
+                        const rangeResult = getRange(data);
+                        setMin(rangeResult.min);
+                        setMax(rangeResult.max);
                     }
                 }
             }
@@ -115,7 +134,8 @@ export default function RowInfo({type, data, withDetails = false, isAverage = fa
     }
 
     return(
-        <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
+        <div className="w-full flex flex-col items-center justify-center">
+            <div style={{borderColor: colors[type]}}className={`w-full border-l-[3px] flex flex-row items-center justify-between px-4`}>
             <h1 className="w-24 h-5 justify-start text-black text-xl font-normal font-['Inter']">{title}</h1>
             <div>
                 <h1 className=" h-5  justify-start text-black text-xl font-normal font-['Inter']">{ Number.isNaN(posPerc) ? 'N/A' : posPerc}%</h1>
@@ -131,6 +151,10 @@ export default function RowInfo({type, data, withDetails = false, isAverage = fa
                 </div>
            </div>
             {withDetails && <a href={`/${type}Data`} className="w-24 h-5  justify-start text-black text-lg font-normal font-['Inter']">Details</a>}
+            </div>
+            
+            <h1>{`Exact values Ranged from ${min} to ${max}`}</h1>
         </div>
+        
     )
 }
