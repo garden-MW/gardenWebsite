@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Creator Contribution Notes: All commits were switched to be done by one group account, but actual contributions have been made by the following accounts:
+
+- Oliscia Thornton: https://github.com/Oliscia-K 
+
 ## Getting Started
 
 First, run the development server:
@@ -37,6 +41,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 ## NOTES TO FORMAT LATER
-To push to main/do PR: add final commit of this:
-git config user.email "makersgarden2025@gmail.com"
-Has to be merged by this account too? 
