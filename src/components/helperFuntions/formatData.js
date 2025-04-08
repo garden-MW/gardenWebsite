@@ -1,10 +1,9 @@
 import computeNutritionPercentage from './nutritionPerc';
 import computePHPercentage from './nutritionPerc';
 
+//IF NEW BLANK DATA TYPE IS ADDED/UPDATED, UPDATE THIS FUNCTION 
 export default function formatData(input, type){
-  console.log("formatData", input);
   if (!input || input.length === 0){
-    console.log("HIT EMPTY");
     return [
       {x: "Sun", y: 0},
       {x: "Mon", y: 0},
@@ -15,7 +14,6 @@ export default function formatData(input, type){
       {x: "Sat", y: 0}
     ]
   }
-  console.log("input", input);
   const final = [];
   const Sun = [];
   const Mon = [];
@@ -59,8 +57,7 @@ export default function formatData(input, type){
       day[dayArray[0]].forEach((value) => {
         sum += +value;
       })
-      if (type === 'Nutrition'){
-        console.log("toPush", computeNutritionPercentage([sum/(day[dayArray[0]].length)], true));
+      if (type === 'Nutrition'){ //THIS IS WHERE UPDATE WOULD BE NEEDED: If statements for each data type with appropriate percent function
         final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)], true)});
       }else{
         final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)], true)});

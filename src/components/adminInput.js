@@ -68,6 +68,8 @@ export default function AdminInput() {
         );
     }
 
+    //IF NEW SENSOR TYPES ARE ADDED, UPDATE THE CHOICES FOR THE RADIO INPUTS
+
     return (
         <div className="h-screen w-sceen space-y-5 flex flex-col justify-center items-center">
             <h1>Select Data Entry Type</h1>
