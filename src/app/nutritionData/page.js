@@ -3,6 +3,7 @@ import RowInfo from "@/components/rowInfo"
 import SpecificGraph from "@/components/specificGraph"
 import {useState, useEffect} from 'react';
 import formatData from '../../components/helperFuntions/formatData';
+import InfoBox from "@/components/infoBox";
 
 export default function NutritionData() {
      const [fullData, setFullData] = useState([]);
@@ -19,7 +20,6 @@ export default function NutritionData() {
                 return response.json();
             })
             .then(data => {
-                console.log("data", data);
                 setFullData(data);
                 setCurrentData(data ? data[index] : []);
                 setCurrentGraphData(formatData(data.length > 0 ? data[index] : [], 'Nutrition'));
@@ -65,8 +65,8 @@ export default function NutritionData() {
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>
-            <div className="bg-white w-full h-44 rounded-lg flex items-center justify-center">
-                <p className="p-3 text-center">Placeholder for info box</p>
+            <div className="w-full h-auto">
+                <InfoBox type="nutrition" />
             </div>
             <div className="flex flex-row w-full h-auto justify-between ">
                 <div className=" w-full h-auto flex items-center">

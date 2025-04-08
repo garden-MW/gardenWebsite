@@ -3,6 +3,7 @@ import RowInfo from "@/components/rowInfo"
 import SpecificGraph from "@/components/specificGraph"
 import {useState, useEffect} from 'react';
 import formatData from '../../components/helperFuntions/formatData';
+import InfoBox from "@/components/infoBox";
 //^^^^  FORMATDATA NEEDS TO BE UPDATED FOR NEW DATA TYPE
 
 export default function BlankData2() {   //change to appropriate name
@@ -64,8 +65,8 @@ export default function BlankData2() {   //change to appropriate name
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>
-            <div className="bg-white w-full h-44 rounded-lg flex items-center justify-center">
-                <p className="p-3 text-center">Placeholder for info box</p>
+            <div className="w-full h-auto">
+                <InfoBox type="ph" />
             </div>
             <div className="flex flex-row w-full h-auto justify-between ">
                 <div className=" h-auto flex items-center">
