@@ -1,81 +1,26 @@
+/* eslint-disable react/no-unescaped-entities */
 import Image from "next/image";
+import EmblaCarousel from "@/components/carousel";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            This is the main page place holder.
-          </li>
-          <li>Use links to go to current page process</li>
-        </ol>
+    <div className="flex flex-col items-center justify-center h-full">
+      <div className="flex flex-col items-center justify-center w-full md:w-[70%] p-24 space-y-4">
+          <h1 className=" font-serif font-bold shadow-lg text-zinc-50 text-3xl text-center mb-5">Welcome to the Maker Space Garden!</h1>
+          <p className="font-serif text-gray-700 text-lg text-center text-pretty text border-2 border-gray-300 rounded-lg p-4 bg-white shadow-md">
+          Our garden is a Hydroponic Plant System, a project developed by students from Middlebury College. This innovative system combines sustainable practices with cutting-edge technology to create a self-sufficient growing environment for plants, all without soil. On this site, you'll find data on our system's design and performance showcasing the hard work and creativity of our student team. Feel free to explore times to come visit the garden in person, we would love to have you!
+          </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+          <h2 className=" font-serif pt-10 text-xl font-bold text-zinc-50 text-center">Get Started with an overview of how our plants are fairing!</h2>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+            className=" font-serif shadow-md rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-lg h-10 sm:h-12 px-4 sm:px-5"
             href="./overview"
             rel="noopener noreferrer"
           >
-            Overview Page
+            Overview
           </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          <EmblaCarousel />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
