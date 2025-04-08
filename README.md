@@ -2,7 +2,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 Creator Contribution Notes: All commits were switched to be done by one group account, but actual contributions have been made by the following accounts:
 
-- Oliscia Thornton: https://github.com/Oliscia-K 
+- Oliscia Thornton: https://github.com/Oliscia-K
+
+Deployed site can be viewed at https://makers-garden.vercel.app
 
 ## Getting Started
 
