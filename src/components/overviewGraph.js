@@ -10,7 +10,7 @@ import computeNutritionPercentage from './helperFuntions/nutritionPerc';
 import computePHPercentage from './helperFuntions/pHPerc';
 
 
-function formatData(input, type){
+function formatData(input, type){ //THIS MUST BE UPDATED IF NEW DATA TYPES ARE ADDED (BLANKDATA1, ETC. UPDATED)
   const final = [];
   const Sun = [];
   const Mon = [];
@@ -54,7 +54,7 @@ function formatData(input, type){
       day[dayArray[0]].forEach((value) => {
         sum += +value;
       })
-      if (type === 'Nutrition'){
+      if (type === 'Nutrition'){  //THIS IS WHERE UPDATES WOULD BE NEEDED: If statements dependent on type
         final.push({x: dayArray[0], y: computeNutritionPercentage([sum/(day[dayArray[0]].length)], false, true)});
       }else{
         final.push({x: dayArray[0], y: computePHPercentage([sum/(day[dayArray[0]].length)], false, true)});
@@ -66,9 +66,11 @@ function formatData(input, type){
 }
 
 export default function GraphDash() {
+  //ADDITIONAL STATES WHEN BLANKDATA1, ETC. ARE ADDED
+  //const [blankData1, setBlankData1] = useState([]);
   const [nutritionData, setNutritionData] = useState([]);
   const [pHData, setPHData] = useState([]);
-  useEffect(() => {
+  useEffect(() => { //ADD FETCHES FOR ALL DATA TYPES
     fetch(`/api/nutritionData`)
         .then(response => {
             if (!response.ok) {
@@ -95,6 +97,8 @@ export default function GraphDash() {
         .catch(error => console.error('Fetch error:', error)); 
   }, [])
 
+
+  //ADD <VICTORYBAR> AND LABEL FOR NEW DATA TYPES AS SHOWN --> {/*...*/}
   return (
     <div className="w-full h-full mt-1 flex flex-col justify-between">
     <VictoryChart

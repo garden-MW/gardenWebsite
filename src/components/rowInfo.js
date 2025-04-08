@@ -19,7 +19,6 @@ function getRange(data){
     }
     const min = Math.min(...data.map(item => item.value));
     const max = Math.max(...data.map(item => item.value));
-    console.log(min, max);
     return {min, max};
 }
 
@@ -37,7 +36,7 @@ export default function RowInfo({type, data, withDetails = false, isAverage = fa
         pH: '#2B7052',
     }
 
-    useEffect(() => {
+    useEffect(() => {     //NEEDS TO BE UPDATED TO GET APPROPRIATE PERCENTAGE BASED ON THE DATA TYPE IF BLANKS ARE UPDATED
         if (!withDetails){
             if (type === 'nutrition'){
                 if (isRecent){
