@@ -69,10 +69,10 @@ export default function BlankData2() {   //change to appropriate name
                 <InfoBox type="ph" />
             </div>
             <div className="flex flex-row w-full h-auto justify-between ">
-                <div className=" h-auto flex items-center">
+                <div className="w-full h-auto flex items-center">
                     <RowInfo type={"blank2"} data={currentData} isAverage/> {/*replace blank2 with appropriate name*/}
                 </div>
-                <div className=" h-auto flex items-center">
+                <div className="w-full h-auto flex items-center">
                     <RowInfo type={"blank2"} data={currentData} isRecent/> {/*replace blank2 with appropriate name*/}
                 </div>
             </div>

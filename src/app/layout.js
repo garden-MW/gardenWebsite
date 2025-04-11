@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import NavMenu from "@/components/navMenu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Maker Space Garden",
-  description: "A place to view the status of Middlebury College's Maker Space Garden located in Johnson",
+  title: "MakerSpace Garden",
+  description: "A place to view the status of Middlebury College's MakerSpace Garden located in Johnson",
 };
 
 export default function RootLayout({ children }) {
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
       <main>
+        <NavMenu />
         {children}
       <hr className="h-2 bg-black border-black mb-5"></hr>
       <footer className=" pb-3 text-sm text-gray-600 flex items-center justify-center">
