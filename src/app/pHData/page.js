@@ -69,10 +69,10 @@ export default function PHData() {
                 <InfoBox type="ph" />
             </div>
             <div className="flex flex-row w-full h-auto justify-between ">
-                <div className=" h-auto flex items-center">
+                <div className="w-full h-auto flex items-center">
                     <RowInfo type={"pH"} data={currentData} isAverage/>
                 </div>
-                <div className=" h-auto flex items-center">
+                <div className="w-full h-auto flex items-center">
                     <RowInfo type={"pH"} data={currentData} isRecent/>
                 </div>
             </div>
