@@ -5,7 +5,7 @@ import EmblaCarousel from "@/components/carousel";
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <div className="flex flex-col items-center justify-center w-full md:w-[70%] p-24 space-y-4">
+      <div className="flex flex-col items-center justify-center w-full md:w-[70%] p-2 space-y-4">
           <h1 className=" font-serif font-bold shadow-lg text-zinc-50 text-3xl text-center mb-5">Welcome to the Maker Space Garden!</h1>
           <p className="font-serif text-gray-700 text-lg text-center text-pretty text border-2 border-gray-300 rounded-lg p-4 bg-white shadow-md">
           Our garden is a Hydroponic Plant System, a project developed by students from Middlebury College. This innovative system combines sustainable practices with cutting-edge technology to create a self-sufficient growing environment for plants, all without soil. On this site, you'll find data on our system's design and performance showcasing the hard work and creativity of our student team. Feel free to explore times to come visit the garden in person, we would love to have you!
