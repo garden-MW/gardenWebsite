@@ -100,7 +100,7 @@ export default function GraphDash() {
 
   //ADD <VICTORYBAR> AND LABEL FOR NEW DATA TYPES AS SHOWN --> {/*...*/}
   return (
-    <div className="w-full h-full mt-1 flex flex-col justify-between">
+    <div className="w-full h-full flex flex-col justify-between">
     <VictoryChart
     domain={{ y: [0, 100] }}
     domainPadding={{ x: 20 }}

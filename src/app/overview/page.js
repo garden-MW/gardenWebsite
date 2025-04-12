@@ -3,7 +3,7 @@ import RowInfo from "@/components/rowInfo"
 
 export default function Overview(){
     return(
-        <div className="flex flex-col h-screen w-screen space-y-5 p-5 items-center justify-center">
+        <div className="flex flex-col h-screen w-screen items-center justify-center">
             <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
                 <GraphDash />
             </div>
