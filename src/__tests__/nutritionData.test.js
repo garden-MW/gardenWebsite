@@ -43,7 +43,7 @@ describe('API TESTING', () => {
             appHandler,
             test: async ({fetch})=> {
                 const response = await fetch({
-                    method: 'PUT',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -71,7 +71,7 @@ describe('API TESTING', () => {
             appHandler,
             test: async ({fetch})=> {
                 const response = await fetch({
-                    method: 'PUT',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -143,7 +143,7 @@ describe('API TESTING', () => {
                 appHandler,
                 test: async ({fetch})=> {
                     const response = await fetch({
-                        method: 'PUT',
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },

@@ -21,7 +21,7 @@ export default function AdminInput() {
         }
 
         fetch(`/api/${type}Data`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
