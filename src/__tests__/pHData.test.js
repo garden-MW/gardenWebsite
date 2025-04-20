@@ -3,22 +3,22 @@
  */
 
 import { testApiHandler } from 'next-test-api-route-handler';
-import * as appHandler from '../app/api/nutritionData/route';
+import * as appHandler from '../app/api/pHData/route';
 import knex from '../../knex/knex'
 
 describe('API TESTING', () => {
     beforeAll(() => 
-        knex.migrate.rollback().then(() => knex.migrate.latest()),
-    );
-
-    afterAll(() =>
-        // Ensure database connection is cleaned up after all tests
-        knex.destroy(),
+        knex.migrate.rollback().then(() => knex.migrate.latest())
     );
 
     beforeEach(() =>
         // Reset contents of the test database
         knex.migrate.rollback().then(() => knex.migrate.latest()).then(() => knex.seed.run())
+    );
+
+    afterAll(() =>
+        // Ensure database connection is cleaned up after all tests
+        knex.destroy()
     );
 
     test('GET with outdated dated data returns an empty array ', async() => {
@@ -36,7 +36,7 @@ describe('API TESTING', () => {
         const currentDate = new Date();
         const dataPoints = {
             date: currentDate.toISOString(),
-            sensor: 'nutrition1',
+            sensor: 'pH1',
             value: 1800,
         }
         await testApiHandler({
@@ -64,7 +64,7 @@ describe('API TESTING', () => {
         //add the new dataPoint
         const dataPoints = {
             date: currentDate.toISOString(),
-            sensor: 'nutrition1',
+            sensor: 'pH1',
             value: 1800,
         }
         await testApiHandler({
@@ -88,7 +88,7 @@ describe('API TESTING', () => {
                 const json = await response.json();
                 expect(json[0].sensor).toBe(dataPoints.sensor);
                 expect(json[0].value).toBe(dataPoints.value);
-                expect(json[0].date).toBe(dataPoints.date);
+                expect(new Date(json[0].date).toISOString().slice(0, -5)).toBe(dataPoints.date.slice(0, -5));
                 expect(json[0].id).toBeDefined();
             }
         })
@@ -100,18 +100,18 @@ describe('API TESTING', () => {
         //add the new dataPoint
         const data = [
             {
-                date: currentDate.toISOString(),
-                sensor: 'nutrition1',
+                date: currentDate.toISOString().slice(0, -5),
+                sensor: 'pH1',
                 value: 1800,
             },
             {
-                date: currentDate.toISOString(),
-                sensor: 'nutrition1',
+                date: currentDate.toISOString().slice(0, -5),
+                sensor: 'pH1',
                 value: 2000,
             },
             {
-                date: currentDate.toISOString(),
-                sensor: 'nutrition3',
+                date: currentDate.toISOString().slice(0, -5),
+                sensor: 'pH3',
                 value: 2200,
             }
         ]
@@ -119,20 +119,23 @@ describe('API TESTING', () => {
         const sortedData = [
             [
                 {
-                    date: currentDate.toISOString(),
-                    sensor: 'nutrition1',
+                    id: expect.any(Number),
+                    date: currentDate.toISOString().slice(0, -5),
+                    sensor: 'pH1',
                     value: 1800,
                 },
                 {
-                    date: currentDate.toISOString(),
-                    sensor: 'nutrition1',
+                    id: expect.any(Number),
+                    date: currentDate.toISOString().slice(0, -5),
+                    sensor: 'pH1',
                     value: 2000,
                 },
             ],
             [
                 {
-                    date: currentDate.toISOString(),
-                    sensor: 'nutrition3',
+                    id: expect.any(Number),
+                    date: currentDate.toISOString().slice(0, -5),
+                    sensor: 'pH3',
                     value: 2200,
                 }
             ]
@@ -156,7 +159,7 @@ describe('API TESTING', () => {
         //GET should now include the new dataPoint
         await testApiHandler({
             appHandler,
-            url: '/api/nutritionData?sorted=true',
+            url: '/api/pHData?sorted=true',
             test: async ({ fetch }) => {
                 const response = await fetch({method: 'GET'});
                 const json = await response.json();

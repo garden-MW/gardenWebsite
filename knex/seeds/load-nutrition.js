@@ -9,7 +9,6 @@ exports.seed = function (knex) {
   // Deletes ALL existing entries
   // Use batch insert because we could have too many users for simple insert
   return knex("Nutrition")
-    .update({ seq: 0})
     .del()
     .then(() => knex.batchInsert("Nutrition", data, 100));
 };
