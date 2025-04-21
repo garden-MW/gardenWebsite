@@ -54,7 +54,7 @@ export async function GET(request){
     }
 }
 
-export async function PUT(request){
+export async function POST(request){
     try {
         
         const { dataPoints } = await request.json();

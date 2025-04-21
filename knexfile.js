@@ -20,6 +20,9 @@ module.exports = {
     client: "sqlite3",
     connection: ":memory:",
     useNullAsDefault: true,
+    migrations: {
+      directory: "./knex/migrations"
+    },
     seeds: {
       directory: "./knex/seeds/test",
     },
