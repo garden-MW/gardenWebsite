@@ -24,7 +24,6 @@ export async function PUT(request){
         
         const { dataPoints } = await request.json();
         const dataMessage = await DataMessage.query().where({type: dataPoints.type}).update({message: dataPoints.message});
-        console.log(dataMessage);
         return NextResponse.json(dataMessage);
     } catch (error) {
         return NextResponse.json(
