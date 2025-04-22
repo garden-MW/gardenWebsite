@@ -59,7 +59,7 @@ describe('API TESTING', () => {
     })
 
     test('GET with current-date data returns an array of that entry', async() => {
-        //current date data should always be within the timeframe of the most recent sunday
+        //current date data should always be within the timeframe of the last 3 days
         const currentDate = new Date();
         //add the new dataPoint
         const dataPoints = {
