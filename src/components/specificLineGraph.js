@@ -14,7 +14,7 @@ import {
 export default function SpecificLineGraph({type, data}) {
   
 
-  const limit = type === "nutrition" ? 3000 : 15;
+  const limit = type === "nutrition" ? 4500 : 15;
 
 
   return (
