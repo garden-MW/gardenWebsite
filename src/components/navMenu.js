@@ -35,9 +35,6 @@ export default function NavMenu(){
                         <Link href="/" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
                             Home
                         </Link>
-                        <Link href="/overview" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
-                            Health Overview
-                        </Link>
                         <Link href="/pHData" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
                             PH Levels
                         </Link>

@@ -1,6 +1,5 @@
 'use client'
 import RowInfo from "@/components/rowInfo"
-import SpecificGraph from "@/components/specificGraph"
 import {useState, useEffect} from 'react';
 import formatData from '../../components/helperFuntions/formatData';
 import InfoBox from "@/components/infoBox";
@@ -62,7 +61,7 @@ export default function PHData() {
             <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
                 <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
-                    <SpecificLineGraph type="pH" />
+                    <SpecificLineGraph type="pH" data={currentGraphData} />
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>

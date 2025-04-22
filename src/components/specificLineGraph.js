@@ -8,31 +8,23 @@ import {
   VictoryTooltip,
   VictoryLine,
   VictoryAxis,
-  VictoryScatter,
 } from "victory";
 
 
-export default function SpecificLineGraph({type}) {
-  const data = [
-    {x: "some date1", y: 2},
-    {x: "some date2", y: 3},
-    {x: "some date3", y: 4},
-    {x: "some date4", y: 3},
-    {x: "some date5", y: 6},
-    {x: "some date6", y: 8},
-  ]; 
+export default function SpecificLineGraph({type, data}) {
+  
 
-  const limit = type === "nutrition" ? 3000 : 9;
+  const limit = type === "nutrition" ? 3000 : 15;
+
 
   return (
     <div className="w-full h-full lg:border-none mt-1 flex flex-col justify-between">
     <VictoryChart
     domain={{ y: [0, limit], }}
-    domainPadding={{ x: 20 }}
     containerComponent={
       <VictoryVoronoiContainer 
         voronoiDimension="x"
-        labels={({ datum }) => `${datum.x}: ${datum.y}`}
+        labels={({ datum }) => `${datum.x} \n value: ${datum.y}`}
         labelComponent={
           <VictoryTooltip />
         }
@@ -42,7 +34,7 @@ export default function SpecificLineGraph({type}) {
       <VictoryAxis
         tickValues={[]}
       />
-      <VictoryAxis dependentAxis />
+      <VictoryAxis dependentAxis  />
       <VictoryGroup
         offset={0}
         style={{data: {width: 10}}}
@@ -62,10 +54,6 @@ export default function SpecificLineGraph({type}) {
           />
         
         }
-        <VictoryScatter
-          data = {data}
-          size={4}
-        />
 
       </VictoryGroup>
     </VictoryChart>
