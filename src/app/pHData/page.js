@@ -1,9 +1,9 @@
 'use client'
 import RowInfo from "@/components/rowInfo"
-import SpecificGraph from "@/components/specificGraph"
 import {useState, useEffect} from 'react';
 import formatData from '../../components/helperFuntions/formatData';
 import InfoBox from "@/components/infoBox";
+import SpecificLineGraph from "@/components/specificLineGraph";
 
 export default function PHData() {
     const [fullData, setFullData] = useState([]);
@@ -58,10 +58,10 @@ export default function PHData() {
     return (
         <div className=" p-10 flex flex-col h-screen w-screen space-y-5 items-center justify-evenly">
             <h1 className="text-3xl">Sensor: {currentData ? index + 1 : "No Current Data"}</h1>
-            <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
+            <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
                 <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
-                    <SpecificGraph type="pH" data={currentGraphData} />
+                    <SpecificLineGraph type="pH" data={currentGraphData} />
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>

@@ -8,22 +8,30 @@ const normalizeToLocalMidnight = (date) => {
   return normalized;
 };
 
+/*
+ original code to get data from sunday onwards incase there is a decision to switch back to weekly
 
-export async function GET(request){
-    const { searchParams } = new URL(request.url);
-    const sorted = searchParams.get("sorted");
-    const currentDate = new Date();
+const currentDate = new Date();
     const currentDay = currentDate.getDay();
     const offsetToLastSunday = (currentDay + 7) % 7;
     let lastSundayDate = new Date(currentDate);
     lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
     lastSundayDate = normalizeToLocalMidnight(lastSundayDate);
+*/
+
+
+export async function GET(request){
+    const { searchParams } = new URL(request.url);
+    const sorted = searchParams.get("sorted");
+    const currentDate = new Date(new Date().toLocaleDateString());
+    const threeDaysAgo = normalizeToLocalMidnight(new Date(currentDate.toLocaleDateString()));
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     try {
         const nutrition = await Nutrition.query().orderBy('sensor', 'asc');
         if (nutrition) {
           const weekData = nutrition.filter((input) => {
             const inputDate = normalizeToLocalMidnight(new Date(input.date));
-            return inputDate >= lastSundayDate;
+            return currentDate >= inputDate && inputDate >= threeDaysAgo;
           })
           if (weekData.length > 0 && sorted){
             const groupedData = [];
