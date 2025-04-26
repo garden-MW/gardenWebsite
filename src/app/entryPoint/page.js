@@ -11,8 +11,19 @@ export default async function EntryPoint() {
 
 
     if (!isLoggedIn) {
-        return <PasswordPromptDialog />
+        return (
+            <div className="w-screen h-full mb-10">
+                <PasswordPromptDialog />
+            </div>
+        
+        )
+
     }
-    return <AdminInput />
+    return (
+        <div className="w-full h-full mb-3">
+            <AdminInput />
+        </div>
+    
+    )
 
 }

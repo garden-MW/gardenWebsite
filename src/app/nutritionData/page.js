@@ -58,7 +58,7 @@ export default function NutritionData() {
     return (
         <div className="flex flex-col h-screen w-screen p-10 space-y-5 items-center justify-evenly">
             <h1 className="text-3xl">Sensor: {currentData ? index + 1 : "No Current Data"}</h1>
-            <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
+            <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
                 <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
                     <SpecificLineGraph type="nutrition" data={currentGraphData} />
@@ -68,8 +68,8 @@ export default function NutritionData() {
             <div className="w-full h-auto">
                 <InfoBox type="nutrition" />
             </div>
-            <div className="flex flex-row w-full h-auto justify-between ">
-                <div className=" w-full h-auto flex items-center">
+            <div className="flex flex-col md:flex-row w-full h-auto md:justify-between  ">
+                <div className=" w-full h-auto flex items-center mb-3 md:mb-0">
                     <RowInfo type={"nutrition"} data={currentData} isAverage/>
                 </div>
                 <div className=" w-full h-auto flex items-center">

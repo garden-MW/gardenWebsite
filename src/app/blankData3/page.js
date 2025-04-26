@@ -60,7 +60,7 @@ export default function BlankData3() {   //change to appropriate name
             <h1 className="text-3xl">Sensor: {currentData ? index + 1 : "No Current Data"}</h1>
             <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
-                <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
+                <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                     <SpecificGraph type="blank3" data={currentGraphData} /> {/*replace blank3 with appropriate name*/}
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
@@ -68,8 +68,8 @@ export default function BlankData3() {   //change to appropriate name
             <div className="w-full h-auto">
                 <InfoBox type="ph" />
             </div>
-            <div className="flex flex-row w-full h-auto justify-between ">
-                <div className="w-full h-auto flex items-center">
+            <div className="flex flex-col md:flex-row w-full h-auto md:justify-between ">
+                <div className="w-full h-auto flex items-center mb-3 md:mb-0">
                     <RowInfo type={"blank3"} data={currentData} isAverage/> {/*replace blank3 with appropriate name*/}
                 </div>
                 <div className="w-full h-auto flex items-center">
