@@ -33,25 +33,3 @@ export async function PUT(request){
     }
 }
 
-
-/*
-fetch('/api/dataMessage', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        dataPoints:{
-            type: "pH",
-            message: "hi hi" 
-        }
-    })
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error('Fetch error:', error)); */

@@ -20,7 +20,6 @@ export default function PHData() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 setFullData(data);
                 setCurrentData(data[index]);
                 setCurrentGraphData(formatData(data[index], 'PH'));

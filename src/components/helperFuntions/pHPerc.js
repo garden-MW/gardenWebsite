@@ -1,5 +1,7 @@
 export default function computePHPercentage(data, actual = false, overview = false, twoPerc = false){
     if (!data) return 0;
+
+    //average of number types
     if (typeof data[0] === 'number' && !overview){
         let average = 0
         data.forEach(element => {
@@ -7,6 +9,8 @@ export default function computePHPercentage(data, actual = false, overview = fal
         });
         return +(average/data.length).toFixed(2);
     }
+
+    //average of objects in terms of the actual values only
     if (actual){
         let average = 0
         data.forEach(element => {
@@ -15,6 +19,7 @@ export default function computePHPercentage(data, actual = false, overview = fal
         return +(average/data.length).toFixed(2);
     }
 
+    //returns both positive and negative percentages of wavering
     if (twoPerc){
         let totalNeg = 0;
         let totalPos = 0;
@@ -43,11 +48,10 @@ export default function computePHPercentage(data, actual = false, overview = fal
                 //totalPerc += 100;
             }
         });
-        console.log("totalNeg", totalNeg);
-        console.log(negCount);
         return {neg: +(totalNeg/negCount).toFixed(2), pos: +(totalPos/posCount).toFixed(2)};
     }
 
+    //returns overall percentage of wavering
     let totalPerc = 0;
     if (typeof data[0] === 'number' && overview){
         if (data[0] < 6.2){
