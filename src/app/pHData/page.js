@@ -20,7 +20,6 @@ export default function PHData() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 setFullData(data);
                 setCurrentData(data[index]);
                 setCurrentGraphData(formatData(data[index], 'PH'));
@@ -68,8 +67,8 @@ export default function PHData() {
             <div className="w-full h-auto">
                 <InfoBox type="ph" />
             </div>
-            <div className="flex flex-row w-full h-auto justify-between ">
-                <div className="w-full h-auto flex items-center">
+            <div className="flex flex-col md:flex-row w-full h-auto md:justify-between ">
+                <div className="w-full h-auto flex items-center mb-3 md:mb-0">
                     <RowInfo type={"pH"} data={currentData} isAverage/>
                 </div>
                 <div className="w-full h-auto flex items-center">

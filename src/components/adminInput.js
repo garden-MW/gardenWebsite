@@ -104,11 +104,11 @@ export default function AdminInput() {
     //IF NEW SENSOR TYPES ARE ADDED, UPDATE THE CHOICES FOR THE RADIO INPUTS
 
     return (
-        <div className="h-screen w-sceen flex flex-col space-y-10 justify-center items-center">
-            <div className="flex flex-row w-full h-auto justify-evenly">
+        <div className="h-full w-full flex flex-col space-y-10 justify-center items-center">
+            <div className="flex flex-col md:flex-row w-full h-auto justify-evenly">
 
                 {/** Entry Message Input */}
-                <div className="h-full space-y-5 flex flex-col justify-center items-center">
+                <div className="w-full space-y-5 flex flex-col justify-center items-center">
                     <h1>Select Data Entry Type</h1>
                     <div>
                         <input type="radio" id="pH" name="Mtype" value="ph" defaultChecked/>
@@ -117,13 +117,13 @@ export default function AdminInput() {
                         <label htmlFor="nutrition">Nutrition</label>
                     </div>
                     <label htmlFor="entryMessage">Entry Page Message</label>
-                    <textarea className="rounded-lg w-60 h-60" type="text" id="entryMessage" name="entryMessage" required/>
-                    <button type="submit" onClick={() => handleMessage()} style={{backgroundColor: '#b55e3e', width: '12rem'}} className="rounded-lg" >Submit</button>
+                    <textarea className="rounded-lg md:w-60 h-60" type="text" id="entryMessage" name="entryMessage" required/>
+                    <button type="submit" onClick={() => handleMessage()} style={{backgroundColor: '#b55e3e', width: '30%'}} className="rounded-lg" >Submit</button>
                 </div>
 
 
                 {/** Entry Value Input */}
-                <div className="h-full space-y-5 flex flex-col justify-center items-center">
+                <div className="w-full space-y-5 flex flex-col justify-center items-center">
                     <h1>Select Data Entry Type</h1>
                     <div>
                         <input type="radio" id="pH" name="type" value="PH" defaultChecked/>
@@ -132,18 +132,18 @@ export default function AdminInput() {
                         <label htmlFor="nutrition">Nutrition</label>
                     </div>
                     <label htmlFor="entryDate">Entry (date and time)</label>
-                    <input className="rounded-lg w-48" type="datetime-local" id="entryDate" name="entryDate" required/>
+                    <input className="rounded-lg md:w-48" type="datetime-local" id="entryDate" name="entryDate" required/>
                     <label htmlFor="sensor">Sensor</label>
-                    <input className="rounded-lg w-48" type="text" id="sensor" name="sensor" required/>
+                    <input className="rounded-lg md:w-48" type="text" id="sensor" name="sensor" required/>
                     <label htmlFor="value">Value</label>
-                    <input className="rounded-lg w-48" type="number" id="value" name="value" required/>
-                    <button type="submit" onClick={() => handleSubmit()} style={{backgroundColor: '#b55e3e', width: '12rem'}} className="rounded-lg" >Submit</button>
+                    <input className="rounded-lg md:w-48" type="number" id="value" name="value" required/>
+                    <button type="submit" onClick={() => handleSubmit()} style={{backgroundColor: '#b55e3e', width: '30%'}} className="rounded-lg" >Submit</button>
                 </div>
                 
             </div>
     
             
-            <button onClick={() => {router.push('/')}} style={{backgroundColor: '#b55e3e', width: '12rem'}} className="rounded-lg w-48">Back to Home</button>
+            <button onClick={() => {router.push('/')}} style={{backgroundColor: '#b55e3e', width: "30%"}} className="rounded-lg">Back to Home</button>
         </div>
     )
 }

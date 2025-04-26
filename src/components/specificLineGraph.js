@@ -1,6 +1,5 @@
 'use client'
 import React from 'react';
-import {useState, useEffect} from 'react';
 import {
   VictoryChart,
   VictoryGroup,
@@ -8,6 +7,7 @@ import {
   VictoryTooltip,
   VictoryLine,
   VictoryAxis,
+  VictoryScatter,
 } from "victory";
 
 
@@ -52,7 +52,13 @@ export default function SpecificLineGraph({type, data}) {
             data
           } 
           />
-        
+        }
+        {data.length == 1 &&
+          <VictoryScatter
+          style={{ data: { fill: "#c43a31" } }}
+          size={3}
+          data={data}
+        />
         }
 
       </VictoryGroup>

@@ -26,8 +26,8 @@ export default function RootLayout({ children }) {
       <main>
         <NavMenu />
         {children}
-      <hr className="h-2 bg-black border-black mb-5"></hr>
-      <footer className=" pb-3 text-sm text-gray-600 flex items-center justify-center">
+      <hr className=" w-screen h-2 bg-black border-black mb-5"></hr>
+      <footer className=" w-screen pb-3 text-sm text-gray-600 flex items-center justify-center">
         <p
           className="flex items-center gap-2"
         >

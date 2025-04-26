@@ -1,8 +1,4 @@
-import computeNutritionPercentage from './nutritionPerc';
-import computePHPercentage from './nutritionPerc';
-
-//IF NEW BLANK DATA TYPE IS ADDED/UPDATED, UPDATE THIS FUNCTION 
-export default function formatData(input, type){
+export default function formatData(input){
   if (!input || input.length === 0){
     return [];
   }

@@ -80,7 +80,6 @@ export default function GraphDash() {
         })
         .then(data => {
             setNutritionData(formatData(data, 'Nutrition'));
-            console.log(data, formatData(data, 'Nutrition'));
         })
         .catch(error => console.error('Fetch error:', error)); 
 

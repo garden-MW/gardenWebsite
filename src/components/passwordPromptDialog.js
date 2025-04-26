@@ -43,7 +43,7 @@ export default function PasswordPromptDialog({ onSubmit }){
     }
 
     return (
-        <div className=' flex flex-col items-center justify-center space-y-5 h-screen'>
+        <div className='flex flex-col items-center justify-center space-y-5 p-5'>
             <h1 className="text-xl">Please enter admin password to gain access to this page.</h1>
             <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col items-center">
                 <input
