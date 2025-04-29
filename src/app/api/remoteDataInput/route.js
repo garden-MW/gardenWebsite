@@ -33,7 +33,7 @@ export async function POST(request){
     return NextResponse.json({ success: true, data: inserted });
   } catch (err) {
     console.error("Validation or DB insert error:", err);
-    return NextResponse.json({ status: 400 }); 
+    return NextResponse.json({ status: 400, error: err }); 
   }
 }
 
