@@ -11,8 +11,9 @@ export default function NutritionData() {
     const [currentGraphData, setCurrentGraphData] = useState([]);
     const [index, setIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [time, setTime] = useState(1);
     useEffect(() => {
-        fetch(`/api/nutritionData?sorted=true`)
+        fetch(`/api/nutritionData?sorted=true&time=${time}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,7 +27,7 @@ export default function NutritionData() {
                 setLoading(false);
             })
             .catch(error => console.error('Fetch error:', error)); 
-        }, [])
+        }, [time])
 
     const handleClick = (direction) => {
         setLoading(true);
@@ -56,12 +57,12 @@ export default function NutritionData() {
     }
 
     return (
-        <div className="flex flex-col h-screen w-screen p-10 space-y-5 items-center justify-evenly">
+        <div className="flex flex-col h-screen w-screen p-10 space-y-5 items-center justify-evenly overflow-scroll">
             <h1 className="text-3xl">Sensor: {currentData ? index + 1 : "No Current Data"}</h1>
             <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
                 <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
-                    <SpecificLineGraph type="nutrition" data={currentGraphData} />
+                    <SpecificLineGraph type="nutrition" data={currentGraphData} setTime={setTime} />
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>

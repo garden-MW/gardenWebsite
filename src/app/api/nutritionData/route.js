@@ -23,15 +23,19 @@ const currentDate = new Date();
 export async function GET(request){
     const { searchParams } = new URL(request.url);
     const sorted = searchParams.get("sorted");
+    const time = searchParams.get("time");
+    const timeInt = parseInt(time);
     const currentDate = new Date(new Date().toLocaleDateString());
-    const threeDaysAgo = normalizeToLocalMidnight(new Date(currentDate.toLocaleDateString()));
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    const daysAgo = normalizeToLocalMidnight(new Date(currentDate.toLocaleDateString()));
+    if (typeof timeInt === "number"){
+      daysAgo.setDate(daysAgo.getDate() - timeInt);
+    }
     try {
         const nutrition = await Nutrition.query().orderBy('sensor', 'asc');
         if (nutrition) {
           const weekData = nutrition.filter((input) => {
             const inputDate = normalizeToLocalMidnight(new Date(input.date));
-            return currentDate >= inputDate && inputDate >= threeDaysAgo;
+            return currentDate >= inputDate && inputDate >= daysAgo;
           })
           if (weekData.length > 0 && sorted){
             const groupedData = [];
