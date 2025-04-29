@@ -15,7 +15,7 @@ export default function PHData() {
         fetch(`/api/pHData?sorted=true`)
             .then(response => {
                 if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
