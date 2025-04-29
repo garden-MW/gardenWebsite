@@ -11,8 +11,9 @@ export default function PHData() {
     const [currentGraphData, setCurrentGraphData] = useState([]);
     const [index, setIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [time, setTime] = useState(1);
     useEffect(() => {
-        fetch(`/api/pHData?sorted=true`)
+        fetch(`/api/pHData?sorted=true&time=${time}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,7 +27,7 @@ export default function PHData() {
                 setLoading(false);
             })
             .catch(error => console.error('Fetch error:', error)); 
-      }, [])
+      }, [time])
 
       const handleClick = (direction) => {
         setLoading(true);
@@ -55,12 +56,12 @@ export default function PHData() {
         )
     }
     return (
-        <div className=" p-10 flex flex-col h-screen w-screen space-y-5 items-center justify-evenly">
+        <div className=" p-10 flex flex-col h-screen w-screen space-y-3 items-center justify-evenly overflow-scroll">
             <h1 className="text-3xl">Sensor: {currentData ? index + 1 : "No Current Data"}</h1>
             <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
-                <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
-                    <SpecificLineGraph type="pH" data={currentGraphData} />
+                <div className="w-full h-auto lg:max-w-[50%] flex flex-col justify-center items-center">
+                    <SpecificLineGraph type="pH" data={currentGraphData} setTime={setTime} />
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>

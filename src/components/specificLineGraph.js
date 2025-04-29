@@ -9,9 +9,10 @@ import {
   VictoryAxis,
   VictoryScatter,
 } from "victory";
+import TimeSelector from './timeSelector';
 
 
-export default function SpecificLineGraph({type, data}) {
+export default function SpecificLineGraph({type, data, setTime}) {
   
 
   const limit = type === "nutrition" ? 4500 : 15;
@@ -67,10 +68,10 @@ export default function SpecificLineGraph({type, data}) {
 
 
       <div 
-      className="w-[90%] h-[10%] justify-center items-center flex"
+      className="w-full h-[10%] justify-center items-center flex md:flex-row flex-col"
       >
         <div 
-        className="pl-8 pr-8 justify-center items-center gap-8 flex"
+        className="pl-8 justify-center items-center gap-8 flex"
         >
              <div
             className="flex items-center p-4 gap-4 justify-start" 
@@ -94,6 +95,7 @@ export default function SpecificLineGraph({type, data}) {
                 </h1>
             </div>
         </div>
+        <TimeSelector setTime={setTime}/>
       </div>
     </div>
   );
