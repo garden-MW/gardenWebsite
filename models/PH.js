@@ -19,7 +19,7 @@ export default class PH extends BaseModel {
       properties: {
         id: { type: "integer" },
         date: { type: "string" },
-        sensor_type: { type: "string", enum: ["Ph"] },
+        sensor_type: { type: "string", const: "Ph" },
         value: { type: "number"},
       },
     };
