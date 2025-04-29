@@ -18,7 +18,7 @@ export async function GET(request){
     lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
     lastSundayDate = normalizeToLocalMidnight(lastSundayDate);
     try {
-        const blankData1 = await BlankData1.query().orderBy('sensor_type', 'asc');
+        const blankData1 = await BlankData1.query().orderBy('sensor', 'asc');
         if (blankData1) {
           const weekData = blankData1.filter((input) => {
             const inputDate = normalizeToLocalMidnight(new Date(input.date));
@@ -26,15 +26,15 @@ export async function GET(request){
          })
          if (weekData.length > 0 && sorted){
           const groupedData = [];
-          let current = weekData[0].sensor_type;
+          let current = weekData[0].sensor;
           let currentArray = [];
           weekData.forEach((element) => {
-            if (element.sensor_type === current){
+            if (element.sensor === current){
               currentArray.push(element);
             }else{
               groupedData.push(currentArray);
               currentArray = [element];
-              current = element.sensor_type;
+              current = element.sensor;
             }
           })
           groupedData.push(currentArray);

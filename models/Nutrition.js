@@ -14,13 +14,13 @@ export default class Nutrition extends BaseModel {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["sensor_type", "date", "value"],
+      required: ["sensor", "date", "value"],
       additionalProperties: false,
 
       properties: {
         id: { type: "integer" },
         date: { type: "string", format: "date-time" },
-        sensor_type: { type: "string", const: "Nutrition" },
+        sensor: { type: "string" },
         value: { type: "number"},
       },
     };

@@ -13,13 +13,13 @@ export default class PH extends BaseModel {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["sensor_type", "date", "value"],
+      required: ["sensor", "date", "value"],
       additionalProperties: false,
 
       properties: {
         id: { type: "integer" },
         date: { type: "string" },
-        sensor_type: { type: "string", const: "Ph" },
+        sensor: { type: "string" },
         value: { type: "number"},
       },
     };
