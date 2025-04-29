@@ -20,7 +20,7 @@ export default class Nutrition extends BaseModel {
       properties: {
         id: { type: "integer" },
         date: { type: "string", format: "date-time" },
-        sensor_type: { type: "string", enum: ["Nutrition"] },
+        sensor_type: { type: "string", const: "Nutrition" },
         value: { type: "number"},
       },
     };
