@@ -26,7 +26,7 @@ export async function GET(request){
     const threeDaysAgo = normalizeToLocalMidnight(new Date(currentDate.toLocaleDateString()));
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     try {
-        const ph = await PH.query().orderBy('sensor_type', 'asc');
+        const ph = await PH.query().orderBy('sensor', 'asc');
         if (ph) {
           const weekData = ph.filter((input) => {
             const inputDate = normalizeToLocalMidnight(new Date(input.date));
@@ -34,15 +34,15 @@ export async function GET(request){
          })
          if (weekData.length > 0 && sorted){
           const groupedData = [];
-          let current = weekData[0].sensor_type;
+          let current = weekData[0].sensor;
           let currentArray = [];
           weekData.forEach((element) => {
-            if (element.sensor_type === current){
+            if (element.sensor === current){
               currentArray.push(element);
             }else{
               groupedData.push(currentArray);
               currentArray = [element];
-              current = element.sensor_type;
+              current = element.sensor;
             }
           })
           groupedData.push(currentArray);

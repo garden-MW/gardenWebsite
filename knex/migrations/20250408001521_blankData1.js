@@ -9,7 +9,7 @@ exports.up = function (knex) {
     return knex.schema.createTable("BlankData1", (table) => {
       table.increments("id").primary();
       table.string("date").notNullable();
-      table.string("sensor_type").notNullable();
+      table.string("sensor").notNullable();
       table.decimal("value").notNullable();
     });
   };

@@ -17,7 +17,7 @@ export default class BlankData1 extends BaseModel {
       properties: {
         id: { type: "integer" },
         date: { type: "string" },
-        sensor_type: { type: "string" },
+        sensor: { type: "string" },
         value: { type: "number"},
       },
     };

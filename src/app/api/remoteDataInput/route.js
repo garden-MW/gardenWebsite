@@ -27,7 +27,7 @@ export async function POST(request){
       default:
         return NextResponse.json({ error: `Unknown sensor type: ${sensor_type}` }, { status: 400 });
     }
-    const validated = records.map(record => Model.fromJson(record));
+    const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
     const inserted = await Model.query().insert(validated);
 
     return NextResponse.json({ success: true, data: inserted });

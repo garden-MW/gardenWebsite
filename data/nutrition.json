@@ -1,37 +1,37 @@
 [
     {
       "date": "2025-03-23T13:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 2026
     },
     {
       "date": "2025-03-23T13:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 2013
     },
     {
       "date": "2025-03-23T13:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 1998
     },
     {
       "date": "2025-03-24T13:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 2016
     },
     {
       "date": "2025-03-24T13:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 2189
     },
     {
       "date": "2025-03-24T13:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 2160
     },
     {
       "date": "2025-03-24T14:24",
-      "sensor_type": "nutrition1",
+      "sensor": "nutrition0",
       "value": 2160
     }
   ]
