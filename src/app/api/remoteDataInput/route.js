@@ -42,16 +42,16 @@ export async function POST(request){
 export async function DELETE(request) {
   try {
     const body = await request.json();
-    const { timestamp } = body;
+    const { date } = body;
 
-    if (!timestamp) {
-      return NextResponse.json({ error: "Timestamp is required" }, { status: 400 });
+    if (!date) {
+      return NextResponse.json({ error: "Date is required" }, { status: 400 });
     }
 
-    const parsedTimestamp = new Date(timestamp);
+    const parsedDate= new Date(date);
 
-    if (isNaN(parsedTimestamp)) {
-      return NextResponse.json({ error: "Invalid timestamp format" }, { status: 400 });
+    if (isNaN(parsedDate)) {
+      return NextResponse.json({ error: "Invalid Date format" }, { status: 400 });
     }
 
     // Delete records older than the provided timestamp
@@ -59,7 +59,7 @@ export async function DELETE(request) {
     //   .where('timestamp', '<', parsedTimestamp)
     //   .del();
     const deletedPH = await PH.query()
-      .where('timestamp', '<', parsedTimestamp)
+      .where('date', '<', parsedDate)
       .del();
 
     return NextResponse.json({ success: true, deleted: deletedPH }); //deleted: deletedNutrition + deletedPH 
