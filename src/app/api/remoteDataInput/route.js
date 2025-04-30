@@ -65,7 +65,7 @@ export async function DELETE(request) {
     return NextResponse.json({ success: true, deleted: deletedPH }); //deleted: deletedNutrition + deletedPH 
   } catch (err) {
     console.error("Error while deleting data:", err);
-    return NextResponse.json({ error: "Error deleting data" }, { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });;
   }
 }
 //FOR ONE POST REQ
