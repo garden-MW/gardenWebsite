@@ -32,6 +32,10 @@ export default function NutritionData() {
     const handleClick = (direction) => {
         setLoading(true);
         if (direction === "next"){
+            if (fullData.length === 1){
+                setLoading(false);
+                return;
+            }
             let next = 0; 
             index === fullData.length - 1 ? next = 0 : next = index + 1; 
             setIndex(next);
@@ -39,6 +43,10 @@ export default function NutritionData() {
             setCurrentGraphData(formatData(fullData[next], "Nutrition"));
             setLoading(false);
         }else{
+            if (fullData.length === 1){
+                setLoading(false);
+                return;
+            }
             let next = 0; 
             index === 0 ? next = fullData.length - 1 : next = index - 1; 
             setIndex(next);
