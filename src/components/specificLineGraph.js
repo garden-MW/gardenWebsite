@@ -15,13 +15,14 @@ import TimeSelector from './timeSelector';
 export default function SpecificLineGraph({type, data, setTime}) {
   
 
-  const limit = type === "nutrition" ? 4500 : 15;
+  const limit = type === "nutrition" ? 4500 : 7.5;
+  const begin = type === "nutrition" ? 0 : 5.5;
 
 
   return (
     <div className="w-full h-full lg:border-none mt-1 flex flex-col justify-between">
     <VictoryChart
-    domain={{ y: [0, limit], }}
+    domain={{ y: [begin, limit], }}
     containerComponent={
       <VictoryVoronoiContainer 
         voronoiDimension="x"

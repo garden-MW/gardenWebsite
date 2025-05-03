@@ -13,6 +13,6 @@ export default function formatData(input){
 
   input.forEach((element) => {
     final.push({x: formatDate(element.date), y: +element.value});
-  })
+  }) 
   return final;
 }

@@ -50,6 +50,7 @@ export async function GET(request){
             }
           })
           groupedData.push(currentArray);
+
           return NextResponse.json(groupedData);
          }
 
