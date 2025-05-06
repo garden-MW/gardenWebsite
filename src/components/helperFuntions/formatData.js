@@ -8,7 +8,17 @@ export default function formatData(input){
     const day = date.split("T")[0].slice(5);
     const militaryTime = date.split("T")[1].split(":");
     const hours = +militaryTime[0] <= 12?  militaryTime[0] : +militaryTime[0] - 12;
-    return `${day} \n ${hours}:${militaryTime[1]}${+militaryTime[0] <= 12? "AM" : "PM"}`;
+    let ending = "AM";
+    switch (militaryTime[0]){
+      case "00":
+        ending = "AM";
+        break;
+      default:
+        if (+militaryTime[0] >= 12){
+          ending = "PM";
+        }
+    }
+    return `${day} \n ${hours}:${militaryTime[1]}${ending}`;
   }
 
   input.forEach((element) => {
