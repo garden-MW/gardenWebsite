@@ -1,6 +1,8 @@
+'use client'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavMenu from "@/components/navMenu";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,19 +14,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "MakerSpace Garden",
-  description: "A place to view the status of Middlebury College's MakerSpace Garden located in Johnson",
-};
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
       <main>
-        <NavMenu />
+        {pathname != "/display" && <NavMenu />}
         {children}
       <hr className=" w-screen h-2 bg-black border-black mb-5"></hr>
       <footer className=" w-screen pb-3 text-sm text-gray-600 flex items-center justify-center">
