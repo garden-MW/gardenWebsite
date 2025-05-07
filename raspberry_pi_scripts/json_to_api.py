@@ -1,8 +1,16 @@
+#!/usr/bin/env/ python3
 #run every 10 minutes
 import requests
 import json
 from datetime import datetime
 import os
+
+PH_DATA_FILE = '/home/hydro/raspberry_pi_scripts/ph_data.json'
+PH_ARCHIVE_FILE = '/home/hydro/raspberry_pi_scripts/ph_data_archive.json'
+SENSOR_NAME = "ph1"
+
+#url = 'http://10.3.108.151:3000/api/remoteDataInput'
+url = 'https://makers-garden.vercel.app/api/remoteDataInput'
 
 def truncate_to_minute(ts_str):
     dt = datetime.fromisoformat(ts_str)
@@ -11,7 +19,7 @@ def truncate_to_minute(ts_str):
 
 # Load current ph_data
 try:
-    with open('ph_data.json', 'r') as f:
+    with open(PH_DATA_FILE, 'r') as f:
         data = json.load(f)
 except (FileNotFoundError, json.JSONDecodeError):
     data = []
@@ -20,23 +28,20 @@ if not data:
     print("No data to upload.")
     exit()
 
-url = 'http://localhost:3000/api/remoteDataInput'  # Replace with your real URL
-
-batch_size = 10
-to_upload = data[:batch_size]  # get first 10 entries
-
+to_upload = data[:]  # get first 10 entries
 batch = []
 for record in to_upload:
-    sensor = record['sensor']
+    sensor_type = record['sensor']
     raw_timestamp = record['timestamp']
     value = record['value']
 
     truncated_timestamp = truncate_to_minute(raw_timestamp).isoformat()
 
     payload = {
-        "sensor_type": sensor,
-        "timestamp": truncated_timestamp,
-        "value": value
+        "sensor_type": sensor_type,
+        "date": truncated_timestamp,
+        "value": value,
+        "sensor": SENSOR_NAME
     }
 
     batch.append(payload)
@@ -48,24 +53,25 @@ if batch:
         print("Batch Success:", response.json())
         
         # 1. Remove uploaded entries from main ph_data.json
-        remaining_data = data[batch_size:]
-        with open('ph_data.json', 'w') as f:
-            json.dump(remaining_data, f, indent=2)
-        print(f"Removed {len(to_upload)} uploaded entries. Remaining: {len(remaining_data)}")
-
+        with open(PH_DATA_FILE, 'w') as f:
+            json.dump([], f, indent=2)
+            
         # 2. Save uploaded entries into an archive file
-        archive_file = 'ph_data_archive.json'
-        if os.path.exists(archive_file):
-            with open(archive_file, 'r') as f:
-                archive_data = json.load(f)
+        if os.path.exists(PH_ARCHIVE_FILE):
+            with open(PH_ARCHIVE_FILE, 'r') as f:
+                try:
+                    archive_data = json.load(f)
+                except json.JSONDecodeError:
+                    archive_data = []
+                
         else:
             archive_data = []
 
         archive_data.extend(to_upload)
 
-        with open(archive_file, 'w') as f:
+        with open(PH_ARCHIVE_FILE, 'w') as f:
             json.dump(archive_data, f, indent=2)
-        print(f"Archived {len(to_upload)} entries to {archive_file}")
+        print(f"Archived {len(to_upload)} entries to {PH_ARCHIVE_FILE}")
 
     else:
         print("Batch Error:", response.status_code, response.text)

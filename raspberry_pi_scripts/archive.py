@@ -1,11 +1,13 @@
+#!/usr/bin/env/ python3
 #run every 3 weeks
 import json
 import os
 import zipfile
 from datetime import datetime, timedelta
 
-FILENAME = 'ph_data_archive.json'
-ARCHIVE_FOLDER = 'archives/'
+FILENAME = '/home/hydro/raspberry_pi_scripts/ph_data_archive.json'
+FILES_TO_CLEAR_CRON =  ["/home/hydro/raspberry_pi_scripts/cron_log.txt" , "/home/hydro/raspberry_pi_scripts/cron_log2.txt"]
+ARCHIVE_FOLDER = '/home/hydro/raspberry_pi_scripts/archives/'
 MAX_AGE = timedelta(weeks=3)
 
 # Make sure archive folder exists
@@ -61,5 +63,15 @@ if old_data:
     with open(FILENAME, 'w') as f:
         json.dump(new_data, f, indent=2)
     print(f"Main data file trimmed to {len(new_data)} records.")
+    
+    #clearing old cron txt files (data about cron jobs ran)
+    for cron_file in FILES_TO_CLEAR_CRON:
+        try:
+            with  open(cron_file, 'w') as f:
+                f.write('')
+            print(f"cleared {cron_file}.")
+            
+        except Exception as e:
+            print(f"failed to clear {cron_file}: {e}")
 else:
     print("No data older than 3 weeks to archive.")

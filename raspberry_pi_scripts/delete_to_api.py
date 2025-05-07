@@ -1,17 +1,23 @@
+#!/usr/bin/env/ python3
 #run once a day
 import requests
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 # Calculate timestamp for 3 weeks ago (21 day ago)
-old = datetime.utcnow() - timedelta(days=21)
+
+#use this way if the delete doesn't happen
+#old = datetime.utcnow() - timedelta(days=21)
+
+old = datetime.now(ZoneInfo("US/Eastern")) - timedelta(days=21)
 old_timestamp = old.isoformat()
 
 # API endpoint for deleting data older than yesterday
-url = 'https://your-api.com/delete-old-data'
+url = 'https://makers-garden.vercel.app/api/remoteDataInput'
 
 # Payload containing the timestamp to delete records older than this
 payload = {
-    'timestamp': old_timestamp
+    'date': old_timestamp
 }
 
 # Send DELETE request with the payload

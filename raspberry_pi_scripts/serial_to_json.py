@@ -1,11 +1,19 @@
-#run every minute
+#!/usr/bin/env/ python3
 import serial
 import json
 import time
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-time.sleep(2)
+PH_DATA_FILE = '/home/hydro/raspberry_pi_scripts/ph_data.json'
+
+try:
+    ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+    time.sleep(2)
+except Exception as e:
+    print("---Serial port could not be opened---")
+    print("Error:", e)
+    exit()
 
 last_sensor_data = None
 
@@ -18,10 +26,10 @@ while time.time() - start_time < timeout_seconds:
         if line:
             try:
                 sensor_data = json.loads(line)
-                sensor_data['timestamp'] = datetime.utcnow().isoformat()
+                date = datetime.now(ZoneInfo("US/Eastern"))
+                sensor_data['timestamp'] = date.isoformat()
 
                 last_sensor_data = sensor_data  # Keep only the latest valid reading
-                print("Latest reading:", sensor_data)
             except json.JSONDecodeError:
                 print("Invalid JSON received:", line)
     except Exception as e:
@@ -34,14 +42,14 @@ ser.close()
 if last_sensor_data:
     try:
         # Load existing file if exists
-        with open('ph_data.json', 'r') as f:
+        with open(PH_DATA_FILE, 'r') as f:
             existing_data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         existing_data = []
 
     existing_data.append(last_sensor_data)
 
-    with open('ph_data.json', 'w') as f:
+    with open(PH_DATA_FILE, 'w') as f:
         json.dump(existing_data, f, indent=2)
 
     print("Saved latest data:", last_sensor_data)
