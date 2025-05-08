@@ -14,9 +14,28 @@ import TimeSelector from './timeSelector';
 
 export default function SpecificLineGraph({type, data, setTime}) {
   
+  let limit;
+  let begin;
 
-  const limit = type === "nutrition" ? 4500 : 7.5;
-  const begin = type === "nutrition" ? 0 : 5.5;
+switch (type) {
+  case "nutrition":
+    limit = 4500;
+    begin = 0;
+    break;
+  case "ph":
+    limit = 7.5;
+    begin = 5.5
+    break;
+  case "orp":
+    limit = 2000;
+    begin = -2000;
+    break;
+  default:
+    limit = 10;
+    begin = 0
+}
+
+
 
 
   return (
@@ -50,6 +69,14 @@ export default function SpecificLineGraph({type, data, setTime}) {
         {type === "pH" &&
           <VictoryLine 
           style = {{data: { color: "var(--color-pH)" } }}
+          data={
+            data
+          } 
+          />
+        }
+        {type === "orp" &&
+          <VictoryLine 
+          style = {{data: { color: "var(--color-nutrition)" } }}
           data={
             data
           } 

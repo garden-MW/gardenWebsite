@@ -70,12 +70,12 @@ export default function ORPData() {
             <div className="w-full h-auto lg:max-w-[90%] flex justify-center items-center">
                 <button onClick={() => handleClick("previous")}>Previous</button>
                 <div className="w-full h-auto lg:max-w-[50%] flex justify-center items-center">
-                    <SpecificLineGraph type="nutrition" data={currentGraphData} setTime={setTime} />
+                    <SpecificLineGraph type="orp" data={currentGraphData} setTime={setTime} />
                 </div>
                 <button onClick={() => handleClick("next")}>Next</button>
             </div>
             <div className="w-full h-auto">
-                <InfoBox type="nutrition" />
+                <InfoBox type="orp" />
             </div>
             <div className="flex flex-col md:flex-row w-full h-auto md:justify-between  ">
                 <div className=" w-full h-auto flex items-center mb-3 md:mb-0">
