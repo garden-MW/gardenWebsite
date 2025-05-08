@@ -17,21 +17,34 @@ export async function POST(request){
     }
 
     const { sensor_type } = records[0]; // model type
-    let Model;
-    switch (sensor_type) {
-      case "Nutrition":
-        Model = Nutrition;
-        break;
-      case "Ph":
-        Model = PH;
-      case "ORP":
-        Model = ORP;
-        break;
-      default:
-        return NextResponse.json({ error: `Unknown sensor type: ${sensor_type}` }, { status: 400 });
+    let inserted;
+    if (sensor_type === "Nutrition") {
+      const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
+      inserted = await Model.query().insert(validated);
     }
-    const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
-    const inserted = await Model.query().insert(validated);
+    else if(sensor_type === "Ph") {
+      const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
+      inserted = await Model.query().insert(validated);
+    }
+    else if (sensor_type === "ORP") {
+      const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
+      inserted = await Model.query().insert(validated);
+    }
+
+    // switch (sensor_type) {
+    //   case "Nutrition":
+    //     Model = Nutrition;
+    //     break;
+    //   case "Ph":
+    //     Model = PH;
+    //   case "ORP":
+    //     Model = ORP;
+    //     break;
+    //   default:
+    //     return NextResponse.json({ error: `Unknown sensor type: ${sensor_type}` }, { status: 400 });
+    // }
+    // const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
+    // const inserted = await Model.query().insert(validated);
 
     return NextResponse.json({ success: true, data: inserted });
   } catch (err) {
