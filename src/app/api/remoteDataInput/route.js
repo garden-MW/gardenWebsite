@@ -16,21 +16,30 @@ export async function POST(request){
       return NextResponse.json({error: "No records provided"}, {status: 400});
     }
 
-    const { sensor_type } = records[0]; // model type
-    let inserted;
-    if (sensor_type === "Nutrition") {
-      const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
-      inserted = await Model.query().insert(validated);
-    }
-    else if(sensor_type === "Ph") {
-      const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
-      inserted = await Model.query().insert(validated);
-    }
-    else if (sensor_type === "ORP") {
-      const validated = records.map(({sensor_type, ...record}) => Model.fromJson(record)); //drop 'sensor_type' property
-      inserted = await Model.query().insert(validated);
-    }
+    // const { sensor_type } = records[0]; // model type
+    let ph_validated = [];
+    let orp_validated = [];
+    let ec_validated = [];
+    ph_validated = records.map(({record}) => {
+      if (record.sensor_type === "Nutrition") {
+        ph_validated.push(Nutrition.fromJson({sensor_type, ...record}));
+      }
+    });
+    orp_validated = records.map(({record}) => {
+      if (record.sensor_type === "ORP") {
+        orp_validated.push(PH.fromJson({sensor_type, ...record}));
+      }
+    });
+    ec_validated = records.map(({record}) => {
+      if (record.sensor_type === "EC") {
+        ec_validated.push(Nutrition.fromJson({sensor_type, ...record}));
+      }
+    });
+    inserted = await PH.query().batchInsert(ph_validated);
+    inserted = await ORP.query().batchInsert(orp_validated);
+    inserted = await Nutrition.query().batchInsert(ec_validated);
 
+    // Model.fromJson(record) //drop 'sensor_type' property
     // switch (sensor_type) {
     //   case "Nutrition":
     //     Model = Nutrition;
