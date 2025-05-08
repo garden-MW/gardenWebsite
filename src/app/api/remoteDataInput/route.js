@@ -21,17 +21,17 @@ export async function POST(request){
     let orp_validated = [];
     let ec_validated = [];
     ph_validated = records.map(({record}) => {
-      if (record.sensor_type === "Nutrition") {
-        ph_validated.push(Nutrition.fromJson({sensor_type, ...record}));
+      if (record.sensor_type === "Ph") {
+        ph_validated.push(PH.fromJson({sensor_type, ...record}));
       }
     });
     orp_validated = records.map(({record}) => {
       if (record.sensor_type === "ORP") {
-        orp_validated.push(PH.fromJson({sensor_type, ...record}));
+        orp_validated.push(ORP.fromJson({sensor_type, ...record}));
       }
     });
     ec_validated = records.map(({record}) => {
-      if (record.sensor_type === "EC") {
+      if (record.sensor_type === "Nutrition") {
         ec_validated.push(Nutrition.fromJson({sensor_type, ...record}));
       }
     });
