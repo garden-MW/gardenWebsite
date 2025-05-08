@@ -38,8 +38,8 @@ export default function NavMenu(){
                         <Link href="/pHData" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
                             PH Levels
                         </Link>
-                        <Link href="/nutritionData" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
-                            Nutritions Levels
+                        <Link href="/orpData" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
+                            ORP Levels
                         </Link>
                         <Link href="/about" className="block mt-4 md:inline-block md:mt-0 text-teal-lighter hover:text-white mr-4">
                             About
