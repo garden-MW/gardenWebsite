@@ -14,10 +14,10 @@ export default function Home() {
           <h2 className=" font-serif pt-10 text-xl font-bold text-zinc-50 text-center">Take a look at some real time data!</h2>
           <a
             className=" font-serif shadow-md rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-lg h-10 sm:h-12 px-4 sm:px-5"
-            href="./nutritionData"
+            href="./orpData"
             rel="noopener noreferrer"
           >
-            Nutrition Levels
+            ORP Levels
           </a>
           <a
             className=" font-serif shadow-md rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-white text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-lg h-10 sm:h-12 px-4 sm:px-5"

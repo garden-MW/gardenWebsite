@@ -1,0 +1,78 @@
+//import onError from '../../../lib/middleware';
+import ORP from '../../../../models/ORP';
+import { NextResponse } from 'next/server';
+
+const normalizeToLocalMidnight = (date) => {
+  const normalized = new Date(date);
+  normalized.setHours(0, 0, 0, 0); // Set time to midnight in local time
+  return normalized;
+};
+
+/*
+ original code to get data from sunday onwards incase there is a decision to switch back to weekly
+
+const currentDate = new Date();
+    const currentDay = currentDate.getDay();
+    const offsetToLastSunday = (currentDay + 7) % 7;
+    let lastSundayDate = new Date(currentDate);
+    lastSundayDate.setDate(currentDate.getDate() - offsetToLastSunday);
+    lastSundayDate = normalizeToLocalMidnight(lastSundayDate);
+*/
+
+
+export async function GET(request){
+    const { searchParams } = new URL(request.url);
+    const sorted = searchParams.get("sorted");
+    const time = searchParams.get("time");
+    const timeInt = parseInt(time);
+    const currentDate = new Date(new Date().toLocaleDateString());
+    const daysAgo = normalizeToLocalMidnight(new Date(currentDate.toLocaleDateString()));
+    if (typeof timeInt === "number"){
+      daysAgo.setDate(daysAgo.getDate() - timeInt);
+    }
+    try {
+        const orp = await ORP.query().orderBy('sensor', 'asc');
+        if (orp) {
+          const weekData = orp.filter((input) => {
+            const inputDate = normalizeToLocalMidnight(new Date(input.date));
+            return currentDate >= inputDate && inputDate >= daysAgo;
+          })
+          if (weekData.length > 0 && sorted){
+            const groupedData = [];
+            let current = weekData[0].sensor;
+            let currentArray = [];
+            weekData.forEach((element) => {
+              if (element.sensor === current){
+                currentArray.push(element);
+              }else{
+                groupedData.push(currentArray);
+                currentArray = [element];
+                current = element.sensor;
+              }
+            })
+            groupedData.push(currentArray);
+            return NextResponse.json(groupedData);
+          }
+  
+          return NextResponse.json(weekData);
+        }
+        return NextResponse.json([]);
+        
+    } catch (error) {
+        return NextResponse.json({
+          error: "Failed to fetch orp data",
+          details: error.message
+        });
+    }
+}
+
+export async function POST(request){
+    try {
+        
+        const { dataPoints } = await request.json();
+        const orp = await ORP.query().insertAndFetch(dataPoints);
+        return NextResponse.json(orp);
+    } catch (error) {
+        return NextResponse.error(error);
+    }
+}
