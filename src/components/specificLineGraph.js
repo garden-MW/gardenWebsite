@@ -24,15 +24,15 @@ switch (type) {
     break;
   case "ph":
     limit = 7.5;
-    begin = 5.5
+    begin = 5.5;
     break;
   case "orp":
     limit = 2000;
     begin = -2000;
     break;
   default:
-    limit = 10;
-    begin = 0
+    limit = 7.5;
+    begin = 5.5;
 }
 
 
