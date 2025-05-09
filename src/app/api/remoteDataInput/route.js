@@ -3,7 +3,7 @@
 // app/api/remoteDataInput/route.js
 import Nutrition from '../../../../models/Nutrition';
 import PH from '../../../../models/PH';
-import ORP from '../../../../models/ORP';
+//import ORP from '../../../../models/ORP';
 import { NextResponse } from 'next/server';
 
 
@@ -24,8 +24,8 @@ export async function POST(request){
         break;
       case "Ph":
         Model = PH;
-      case "ORP":
-        Model = ORP;
+      // case "ORP":
+      //   Model = ORP;
         break;
       default:
         return NextResponse.json({ error: `Unknown sensor type: ${sensor_type}` }, { status: 400 });
