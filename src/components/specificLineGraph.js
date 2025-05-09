@@ -22,7 +22,7 @@ switch (type) {
     limit = 4500;
     begin = 0;
     break;
-  case "ph":
+  case "pH":
     limit = 7.5;
     begin = 5.5;
     break;
