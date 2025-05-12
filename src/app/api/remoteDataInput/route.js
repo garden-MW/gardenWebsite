@@ -24,8 +24,9 @@ export async function POST(request){
         break;
       case "Ph":
         Model = PH;
-      // case "ORP":
-      //   Model = ORP;
+        break;
+      case "ORP":
+        Model = ORP;
         break;
       default:
         return NextResponse.json({ error: `Unknown sensor type: ${sensor_type}` }, { status: 400 });
