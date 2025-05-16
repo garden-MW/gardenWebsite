@@ -13,15 +13,25 @@
 // DallasTemperature sensors(&oneWirePin);
 // float temperature = 0;
 
-//ph
-#define SensorPin A0            //pH meter Analog output to Arduino Analog Input 0
-#define Offset -0.20            //deviation compensate
-#define LED 13
 #define samplingInterval 20
 #define printInterval 800
-#define ArrayLenth  40    //times of collection
-int pHArray[ArrayLenth];   //Store the average value of the sensor feedback
-int pHArrayIndex=0;
+#define ArrayLength  40
+
+//ph
+#define phSensorPin A0            //pH meter Analog output to Arduino Analog Input 0
+#define Offset -0.20            //deviation compensate
+#define LED 13
+int pHArray[ArrayLength];   //Store the average value of the sensor feedback
+int pHArrayIndex = 0;
+
+//ORP
+#include "DFRobot_ORP_PRO.h"
+#define orpSensorPin A1
+#define ADC_BIT 1024.0
+#define reference_voltage 5000
+int orpArray[ArrayLength];
+int orpArrayIndex = 0;
+DFRobot_ORP_PRO ORP(235);
 
 void setup(void)
 {
@@ -29,20 +39,34 @@ void setup(void)
   Serial.begin(9600);
   Serial.println("pH meter experiment!");    //Test the serial monitor
 
+  ORP.setCalibration(ORP.calibrate(3323));
+  Serial.print("calibration is ：");
+  Serial.print(ORP.getCalibration());
+  Serial.println("mV");
+
   //sensors.begin();
 }
+
 void loop(void)
 {
   static unsigned long samplingTime = millis();
   static unsigned long printTime = millis();
-  static float pHValue, voltage;
+  static float pHValue, pHVoltage;
+  static float orpValue, orpVoltage;
 
   if (millis() - samplingTime > samplingInterval)
   {
-    pHArray[pHArrayIndex++] = analogRead(SensorPin);
-    if (pHArrayIndex == ArrayLenth) pHArrayIndex = 0;
-    voltage = avergearray(pHArray, ArrayLenth) * 5.0 / 1024;
-    pHValue = 3.5 * voltage + Offset;
+    pHArray[pHArrayIndex++] = analogRead(phSensorPin);
+    orpArray[orpArrayIndex++] = analogRead(orpSensorPin) / ADC_BIT * reference_voltage;
+
+    if (pHArrayIndex == ArrayLength) pHArrayIndex = 0;
+    if (orpArrayIndex == ArrayLength) orpArrayIndex = 0;
+
+    pHVoltage = avergearray(pHArray, ArrayLength) * 5.0 / 1024;
+    pHValue = 3.5 * pHVoltage + Offset;
+    orpVoltage = avergearray(orpArray, ArrayLength);
+    orpValue = ORP.getORP(orpVoltage);
+
     samplingTime = millis();
   }
 
@@ -53,39 +77,16 @@ void loop(void)
     Serial.print("\"value\": ");
     Serial.print(pHValue, 2);
     Serial.println("}");
+    Serial.print("{\"sensor\": \"ORP\", ");
+    Serial.print("\"value\": ");
+    Serial.print(orpValue, 2);
+    Serial.println("}");
     
     digitalWrite(LED, digitalRead(LED) ^ 1);
     printTime = millis();
   }
 }
 
-// void loop(void)
-// {
-//   static unsigned long samplingTime = millis();
-//   static unsigned long printTime = millis();
-//   static float pHValue,voltage;
-//   if(millis()-samplingTime > samplingInterval)
-//   {
-//       pHArray[pHArrayIndex++]=analogRead(SensorPin);
-//       if(pHArrayIndex==ArrayLenth)pHArrayIndex=0;
-//       voltage = avergearray(pHArray, ArrayLenth)*5.0/1024;
-//       pHValue = 3.5*voltage+Offset;
-//       samplingTime=millis();
-//   }
-//   if(millis() - printTime > printInterval)   //Every 800 milliseconds, print a numerical, convert the state of the LED indicator
-//   {
-//     Serial.print("Voltage:");
-//         Serial.print(voltage,2);
-//         Serial.print("    pH value: ");
-//     Serial.println(pHValue,2);
-//         digitalWrite(LED,digitalRead(LED)^1);
-//         printTime=millis();
-//     // sensors.requestTemperatures();
-//     //   temperature = sensors.getTempCByIndex(0);
-//     //   Serial.print("temp: ");
-//     //   Serial.println(temperature);
-//   }
-// }
 double avergearray(int* arr, int number){
   int i;
   int max,min;
