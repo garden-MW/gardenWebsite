@@ -33,6 +33,15 @@ int orpArray[ArrayLength];
 int orpArrayIndex = 0;
 DFRobot_ORP_PRO ORP(235);
 
+//===EC (when needed)===//
+// #include "DFRobot_EC10.h"
+// #include <EEPROM.h>
+// #define EC_PIN A2
+// float voltage,ecValue,temperature = 25;
+// DFRobot_EC10 ec;
+// int ecArray[ArrayLength];
+// int ecArrayIndex = 0;
+
 void setup(void)
 {
   pinMode(LED,OUTPUT);
@@ -43,6 +52,8 @@ void setup(void)
   Serial.print("calibration is ：");
   Serial.print(ORP.getCalibration());
   Serial.println("mV");
+
+  //ec.begin(); start EC
 
   //sensors.begin();
 }
@@ -58,14 +69,18 @@ void loop(void)
   {
     pHArray[pHArrayIndex++] = analogRead(phSensorPin);
     orpArray[orpArrayIndex++] = analogRead(orpSensorPin) / ADC_BIT * reference_voltage;
+    //ecArray[ecArrayIndex++] = analogRead(EC_PIN) // read the voltage
 
     if (pHArrayIndex == ArrayLength) pHArrayIndex = 0;
     if (orpArrayIndex == ArrayLength) orpArrayIndex = 0;
+    //if (ecArrayIndex == ArrayLength) ecArrayIndex = 0;
 
     pHVoltage = avergearray(pHArray, ArrayLength) * 5.0 / 1024;
     pHValue = 3.5 * pHVoltage + Offset;
     orpVoltage = avergearray(orpArray, ArrayLength);
     orpValue = ORP.getORP(orpVoltage);
+    // ecVoltage = averageArray(ecArray, ArrayLength)/1024.0*5000;
+    // ecValue = ec.readEC(ecVoltage);
 
     samplingTime = millis();
   }
@@ -81,6 +96,10 @@ void loop(void)
     Serial.print("\"value\": ");
     Serial.print(orpValue, 2);
     Serial.println("}");
+    // Serial.print("{\"sensor\": \"EC\", ");
+    // Serial.print("\"value\": ");
+    // Serial.print(ecValue, 1);
+    // Serial.println("}");
     
     digitalWrite(LED, digitalRead(LED) ^ 1);
     printTime = millis();
